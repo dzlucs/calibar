@@ -1,2 +1,0 @@
-Vamos estudar PHP?
-Vamos sim!
