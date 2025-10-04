@@ -1,0 +1,88 @@
+name: Continous Integration
+
+on:
+  push:
+  # pull_request:
+  #   types: [opened, synchronize, reopened]
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Create .env
+        run: cp .env.example .env
+
+      - name: Composer install
+        run: ./run composer install
+
+      - name: Generate Codeception files
+        run: ./run codecept build
+
+      - name: Setup Uploads assets permissions
+        run: sudo chown -R www-data:www-data public/assets/uploads
+
+      - name: Up containers
+        run: ./run up -d
+
+      - name: PHPUnit Units test
+        run: ./run test tests/Unit
+
+  acceptance_tests:
+    name: Acceptance Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Create .env
+        run: cp .env.example .env
+
+      - name: Composer install
+        run: ./run composer install
+
+      - name: Generate Codeception files
+        run: ./run codecept build
+
+      - name: Up containers
+        run: ./run up -d
+
+      - name: See containers
+        run: ./run ps
+
+      - name: PHPUnit Acceptance test
+        run: ./run test:browser
+
+  code_quality:
+    name: Code Quality Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Create .env
+        run: cp .env.example .env
+
+      - name: Composer install
+        run: ./run composer install
+
+      - name: PSR-4 Checker
+        run: ./run composer dump-autoload --optimize --strict-psr
+
+      - name: Generate Codeception files
+        run: ./run codecept build
+
+      - name: PHPCS
+        run: ./run phpcs
+
+      - name: PHPStan
+        run: ./run phpstan
