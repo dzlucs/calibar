@@ -18,13 +18,14 @@ class User extends Model
     protected static array $columns = ['name', 'email', 'encrypted_password'];
 
     //password é um atributo temporário, usado apenas na aplicação para receber a senha em texto puro antes de ser criptografada.
-    
+
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
 
     public function validates(): void
     {
         Validations::notEmpty('email', $this);
+        Validations::notEmpty('name', $this);
         Validations::notEmpty('password', $this);
         Validations::uniqueness('email', $this);
 

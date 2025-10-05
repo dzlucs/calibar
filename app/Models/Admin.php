@@ -13,7 +13,8 @@ use Core\Database\ActiveRecord\Model;
  *
  * */
 
-class Admin extends Model {
+class Admin extends Model
+{
     protected static string $table = 'admins';
     protected static array $columns = ['user_id'];
 
@@ -25,7 +26,8 @@ class Admin extends Model {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function validates(): void {
+    public function validates(): void
+    {
         if ($this->user_id == 0) {
             $this->addError('user_id', 'O user_id não pode ser nulo.');
             return;
@@ -36,5 +38,4 @@ class Admin extends Model {
     {
         return $this->errors;
     }
-
 }
