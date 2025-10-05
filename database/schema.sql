@@ -16,7 +16,7 @@ CREATE TABLE users (
   name VARCHAR(255) NOT NULL,
   email VARCHAR(50) NOT NULL UNIQUE,
   encrypted_password VARCHAR(255) NOT NULL,
-  profile_photo VARCHAR(50) NOT NULL
+  profile_photo VARCHAR(50)
 );
 
 CREATE TABLE admins (
