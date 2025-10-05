@@ -11,3 +11,6 @@ use Core\Router\Router;
 ErrorsHandler::init();
 EnvLoader::init();
 Router::init();
+
+# adding 04/10
+require 'router.php';

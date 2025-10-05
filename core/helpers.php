@@ -10,6 +10,7 @@ if (!function_exists('dd')) {
     }
 }
 
+# verificar se existe a rota antes de definir
 if (!function_exists('route')) {
     /**
      * @param string $name
@@ -17,7 +18,7 @@ if (!function_exists('route')) {
      * @return string
      */
     function route(string $name, $params = []): string
-    {
+    { # vai encapsular a chamada para getRoutePathByName 
         return Router::getInstance()->getRoutePathByName($name, $params);
     }
 }
