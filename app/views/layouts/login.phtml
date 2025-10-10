@@ -15,9 +15,6 @@
 
 <body>
     <main>
-
-        <?php require '_flash_message.phtml'; ?>
-
         <div class="container">
             <div class="div-img">
             </div>
@@ -25,7 +22,9 @@
                 <?php require $view ?>
             </div>
         </div>
-
+        <div class="flash-msg">
+            <?php require '_flash_message.phtml'; ?>
+        </div>
     </main>
 </body>
 
