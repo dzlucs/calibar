@@ -13,9 +13,9 @@ use Core\Database\ActiveRecord\Model;
  *
  * */
 
-class Admin extends Model
+class Customer extends Model
 {
-    protected static string $table = 'admins';
+    protected static string $table = 'customers';
     protected static array $columns = ['user_id'];
 
     protected array $errors = [];
@@ -25,8 +25,8 @@ class Admin extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
- 
-    public function validates(): void
+
+     public function validates(): void
     {
         if ($this->user_id == 0) {
             $this->addError('user_id', 'O user_id não pode ser nulo.');

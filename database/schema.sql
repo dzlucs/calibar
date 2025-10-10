@@ -1,6 +1,7 @@
 SET foreign_key_checks = 0;
 
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS galleries;
@@ -20,6 +21,12 @@ CREATE TABLE users (
 );
 
 CREATE TABLE admins (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
+CREATE TABLE customers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT,
   FOREIGN KEY (user_id) REFERENCES users(id)

@@ -22,6 +22,16 @@ class User extends Model
     protected ?string $password = null;
     protected ?string $password_confirmation = null;
 
+    public function isAdmin(): bool
+    {
+        return Admin::findBy(['user_id' => $this->id]) !== null;
+    }
+
+    public function admin(): ?Admin
+    {
+        return Admin::findBy(['user_id' => $this->id]);
+    }
+
     public function validates(): void
     {
         Validations::notEmpty('email', $this);
