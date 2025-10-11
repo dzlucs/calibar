@@ -11,6 +11,7 @@ class AdminController extends Controller
     public function index(Request $request): void
     {
         $title = 'Página Inicial do Administrador';
-        $this->render('admin/index', compact('title'));
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $this->render('admin/index', compact('title', 'imagePath'), 'dashboard');
     }
 }

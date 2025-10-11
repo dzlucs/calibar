@@ -18,6 +18,7 @@ class AuthenticationsController extends Controller
             $title = 'Login';
             $this->render('authentication/login', compact('title'), 'login');
         } else {
+            FlashMessage::danger('Você já está logado(a)!');
             $user = Auth::user();
             $this->redirectLoggedUser($user);
         }

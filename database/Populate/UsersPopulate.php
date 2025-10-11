@@ -11,8 +11,8 @@ class UsersPopulate{
     public static function populate(): void {
         
         $user1 = new User([
-            'name' => 'user_example',
-            'email' => 'user@exemplo.com',
+            'name' => 'Lucas',
+            'email' => 'admin@exemplo.com',
             'password' => '123456',
             'password_confirmation' => '123456'
         ]);
@@ -29,8 +29,8 @@ class UsersPopulate{
         };
 
         $user2 = new User([
-            'name' => 'user_example2',
-            'email' => 'user@exemplo2.com',
+            'name' => 'Giovana',
+            'email' => 'customer@exemplo.com',
             'password' => '987654',
             'password_confirmation' => '987654'
         ]);

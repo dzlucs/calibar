@@ -1,30 +1,74 @@
 body {
-  margin-top: 60px;
-  background-color: red;
+  background-color: #3E52AC;
 }
 
-#main-content {
-  padding-top: 5px;
-  margin-left: 250px;
+main {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
 }
 
-nav.navbar {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: white;
+.container{
+    background-color: #FFFBF0;
+    width: 50vw;
+    height: 50vh;
+    border-radius: 2rem;
+    display: flex;
+    padding: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);   
 }
 
-.sidebar {
-  width: 250px;
-  position: fixed;
-  top: 55px;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  padding: 0;
-  border-right: 1px solid rgba(0, 0, 0, 0.1);
+.div-img{
+    width: 40%;
+    height: 100%;
+    background-color: green;
+    border-radius: 2rem 0rem 0rem 2rem;
+    background-image: url(../images/defaults/cin-cin-blue.jpeg);
+    background-size: contain;
+    background-position: center;
 }
 
-.avatar {
-  width: 315px;
-  height: 315px;
+.div-form{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+form > h2 {
+    margin-bottom: 2rem;
+}
+
+.btn-primary {
+    background-color: #F87C35;
+    color: #FFFBF0;
+    border: #F87C35;
+    font-weight: 500;
+}
+
+.form-title{
+    color: #020301;
+    font-weight: 600;
+}
+
+.flash-msg {
+    height: 1rem;
+    width: 50vw;
+    margin-top: 1rem;
+}
+
+
+
+
+

@@ -11,6 +11,7 @@ class CustomerController extends Controller
     public function index(Request $request): void
     {
         $title = 'Página Inicial do Cliente';
-        $this->render('customer/index', compact('title'));
+        $imagePath = '/assets/images/defaults/girl-profile.jpeg';
+        $this->render('customer/index', compact('title', 'imagePath'), 'dashboard');
     }
 }
