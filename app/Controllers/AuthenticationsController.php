@@ -10,12 +10,11 @@ use Lib\FlashMessage;
 
 class AuthenticationsController extends Controller
 {
-
     //renderiza a tela de login
     //código alterado para que não seja possível acessar a tela de login já estando autenticado
     public function new(Request $request): void
     {
-        if(!Auth::check()){
+        if (!Auth::check()) {
             $title = 'Login';
             $this->render('authentication/login', compact('title'), 'login');
         } else {
@@ -23,7 +22,7 @@ class AuthenticationsController extends Controller
             $this->redirectLoggedUser($user);
         }
     }
- 
+
     public function authenticate(Request $request): void
     {
         $params = $request->getParam('user');

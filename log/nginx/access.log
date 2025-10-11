@@ -2340,3 +2340,5 @@
 172.20.0.1 - - [11/Oct/2025:01:19:00 +0000] "GET /customer HTTP/1.1" 200 1512 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 172.20.0.1 - - [11/Oct/2025:01:19:02 +0000] "GET /logout? HTTP/1.1" 302 5 "http://localhost/customer" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
 172.20.0.1 - - [11/Oct/2025:01:19:02 +0000] "GET /login HTTP/1.1" 200 1818 "http://localhost/customer" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+172.20.0.1 - - [11/Oct/2025:01:51:49 +0000] "POST /login HTTP/1.1" 302 5 "http://localhost/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"
+172.20.0.1 - - [11/Oct/2025:01:51:49 +0000] "GET /customer HTTP/1.1" 200 1477 "http://localhost/login" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36"

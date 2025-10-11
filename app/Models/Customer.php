@@ -26,13 +26,19 @@ class Customer extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-     public function validates(): void
+    public function validates(): void
     {
         if ($this->user_id == 0) {
             $this->addError('user_id', 'O user_id não pode ser nulo.');
             return;
         }
     }
+
+    /**
+     * Retorna os erros do Admin
+     *
+     * @return string[]
+     */
 
     public function getErrors(): array
     {

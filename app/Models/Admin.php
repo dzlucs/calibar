@@ -25,7 +25,7 @@ class Admin extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
- 
+
     public function validates(): void
     {
         if ($this->user_id == 0) {
@@ -33,6 +33,12 @@ class Admin extends Model
             return;
         }
     }
+
+    /**
+     * Retorna os erros do Admin
+     *
+     * @return string[]
+     */
 
     public function getErrors(): array
     {
