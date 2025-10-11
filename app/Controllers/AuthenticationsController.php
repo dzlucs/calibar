@@ -12,10 +12,16 @@ class AuthenticationsController extends Controller
 {
 
     //renderiza a tela de login
+    //código alterado para que não seja possível acessar a tela de login já estando autenticado
     public function new(Request $request): void
     {
-        $title = 'Login';
-        $this->render('authentication/login', compact('title'), 'login');
+        if(!Auth::check()){
+            $title = 'Login';
+            $this->render('authentication/login', compact('title'), 'login');
+        } else {
+            $user = Auth::user();
+            $this->redirectLoggedUser($user);
+        }
     }
  
     public function authenticate(Request $request): void
@@ -44,11 +50,7 @@ class AuthenticationsController extends Controller
         $user = Auth::user();
 
         if ($user) {
-            if ($user->isAdmin()) {
-                $this->redirectTo(route('admin.index'));
-            } else {
-                $this->redirectTo(route('driver.index'));
-            }
+            $this->redirectLoggedUser($user);
         } else {
             $this->redirectTo(route('users.login'));
         }
@@ -59,5 +61,14 @@ class AuthenticationsController extends Controller
         Auth::logout();
         FlashMessage::success('Logout realizado com sucesso!');
         $this->redirectTo(route('users.login'));
+    }
+
+    public function redirectLoggedUser(User $user): void
+    {
+        if ($user->isAdmin()) {
+            $this->redirectTo(route('admin.index'));
+        } else {
+            $this->redirectTo(route('customer.index'));
+        }
     }
 }

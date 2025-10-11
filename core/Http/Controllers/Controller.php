@@ -56,7 +56,7 @@ class Controller
         return;
     }
 
-    protected function redirectTo(string $location): void
+    public function redirectTo(string $location): void
     {
         header('Location: ' . $location);
         exit;
