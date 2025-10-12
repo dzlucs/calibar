@@ -32,13 +32,7 @@ class AuthenticationsController extends Controller
         if ($user && $user->authenticate($params['password'])) {
             Auth::login($user);
             FlashMessage::success('Login realizado com sucesso!');
-
-            // Verificar tipo de usuário
-            if ($user->isAdmin()) {
-                $this->redirectTo(route('admin.index'));
-            } else {
-                $this->redirectTo(route('customer.index'));
-            }
+            $this->redirectLoggedUser($user);
         } else {
             FlashMessage::danger('Email e/ou senha inválidos!');
             $this->redirectTo(route('users.login'));
