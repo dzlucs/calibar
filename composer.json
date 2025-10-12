@@ -5,12 +5,12 @@
       "core/helpers.php"
     ],
     "psr-4": {
-      "App\\": "app/",
-      "Tests\\": "tests/",
-      "Core\\": "core/",
-      "Database\\": "database/",
-      "Lib\\": "lib/",
-      "Config\\": "config/"
+      "Calibar\\App\\": "app/",
+      "Calibar\\Tests\\": "tests/",
+      "Calibar\\Core\\": "core/",
+      "Calibar\\Database\\": "database/",
+      "Calibar\\Lib\\": "lib/",
+      "Calibar\\Config\\": "config/"
     }
   },
   "require-dev": {
