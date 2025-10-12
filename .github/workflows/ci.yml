@@ -2,8 +2,8 @@ name: Continous Integration
 
 on:
   push:
-  # pull_request:
-  #   types: [opened, synchronize, reopened]
+  pull_request:
+    types: [opened, synchronize, reopened]
 
 jobs:
   tests:
