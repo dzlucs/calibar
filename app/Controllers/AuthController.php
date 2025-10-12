@@ -10,44 +10,57 @@ use Calibar\Lib\Auth;
 use Calibar\Lib\Session;
 use Calibar\Models\User;
 
-class AuthController extends Controller
+class AuthenticationsController extends Controller
 {
-    public function create()
+    public function new(Request $request): void
     {
-        // return View::render('auth.login');
+        $title = 'Login';
+        $this->render('authentications/new', compact('title'), 'authLayout');
     }
 
-    public function store(Request $request)
+    public function authenticate(Request $request): void
     {
-        $validator = new Validator($request->all());
-        $validator->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $params = $request->getParam('user');
+        $user = User::findBy(['cpf' => $params['cpf']]);
 
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator->getErrors());
-        }
-
-        $user = User::findByEmail($request->input('email'));
-
-        if (!$user || !$user->authenticate($request->input('password'))) {
-            Session::set('error', 'Credenciais inválidas.');
-            return Redirect::back();
-        }
-        
         $user->last_login_at = date('Y-m-d H:i:s');
         $user->save();
 
-        Auth::login($user->id);
-        Session::set('success', 'Login realizado com sucesso!');
-        return Redirect::to(route('dashboard.index'));
+        if ($user && $user->authenticate($params['password'])) {
+            Auth::login($user);
+            FlashMessage::success('Login realizado com sucesso!');
+
+            // Verificar tipo de usuário
+            if ($user->isDriver()) {
+                $this->redirectTo(route('driver.index'));
+            } else {
+                $this->redirectTo(route('fleets.index'));
+            }
+        } else {
+            FlashMessage::danger('CPF e/ou senha inválidos!');
+            $this->redirectTo(route('users.login'));
+        }
     }
 
-    public function destroy()
+    public function checkLogin(Request $request): void
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            if ($user->isManager()) {
+                $this->redirectTo(route('fleets.index'));
+            } else {
+                $this->redirectTo(route('driver.index'));
+            }
+        } else {
+            $this->redirectTo(route('users.login'));
+        }
+    }
+
+    public function destroy(): void
     {
         Auth::logout();
-        Session::set('success', 'Você foi desconectado com segurança.');
-        return Redirect::to(route('login.create'));
+        FlashMessage::success('Logout realizado com sucesso!');
+        $this->redirectTo(route('users.login'));
     }
 }
