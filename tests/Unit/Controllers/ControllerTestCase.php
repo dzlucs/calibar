@@ -83,7 +83,7 @@ abstract class ControllerTestCase extends TestCase
 
         $code = "
             class {$className} extends {$controllerName} {
-                protected function redirectTo(string \$location): void {
+                public function redirectTo(string \$location): void {
                     echo 'Location: ' . \$location;
                 }
             }
