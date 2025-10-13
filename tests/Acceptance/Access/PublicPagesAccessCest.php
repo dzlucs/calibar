@@ -16,7 +16,7 @@ class PublicPagesAccessCest extends BaseAcceptanceCest
             'name' => 'Customer Test',
             'email' => 'customer@example.com',
             'password' => 'password456',
-            'encrypted_password' => 'password456'
+            'password_confirmation' => 'password456'
         ]);
         $user->save();
 
@@ -37,7 +37,7 @@ class PublicPagesAccessCest extends BaseAcceptanceCest
             'name' => 'Admin Test',
             'email' => 'admin@example.com',
             'password' => 'password789',
-            'encrypted_password' => 'password789'
+            'password_confirmation' => 'password789'
         ]);
         $user->save();
         (new Admin([
