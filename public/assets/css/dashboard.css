@@ -1,0 +1,93 @@
+body {
+  background-color: #FFFBF1;
+}
+
+.btn-logout {
+    width: 100%;
+}
+
+.btn {
+    width: 100%;
+    height: 3rem;
+    font-weight: 700;
+    font-size: 1.3rem;
+    background-color: #f87c35;
+    border: none;
+    cursor: pointer;
+    transition: 
+        box-shadow 0.2s ease, 
+        transform 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover {
+    background-color: #fa610a;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px); /* opcional para reforçar a sensação de pulo leve */
+}
+
+
+.container{
+    background-color: #3E52AC;
+    width: 50vw;
+    height: 50vh;
+    border-radius: 2rem;
+    display: flex;
+    padding: 0;
+    box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);   
+}
+
+.container-img{
+    width: 20vw;
+    height: 50vh;
+    border-radius: 2rem 0rem 0rem 2rem;
+    background-color: #3E52AC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-img{
+    width: 200px;
+    height: 200px;
+/*     background-color: green; */
+    border-radius: 50%;
+/*     background-image: url(../images/defaults/girl-profile.jpeg);
+    background-size: cover;
+    background-position: center; */
+}
+
+.container-form{
+    width: 30vw;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h2 {
+    margin-bottom: 2rem;
+    color: #FFFBF1;
+    font-size: 2rem;
+}
+
+.flash-msg {
+    height: 1rem;
+    width: 50vw;
+    margin-top: 1rem;
+}
+
+.profile-info {
+    /* background-color: red; */
+    height: 25vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+
+

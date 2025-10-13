@@ -13,9 +13,9 @@ use Core\Database\ActiveRecord\Model;
  *
  * */
 
-class Admin extends Model
+class Customer extends Model
 {
-    protected static string $table = 'admins';
+    protected static string $table = 'customers';
     protected static array $columns = ['user_id'];
 
     protected array $errors = [];

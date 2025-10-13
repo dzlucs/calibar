@@ -6,15 +6,21 @@ use Core\Http\Middleware\Middleware;
 use Core\Http\Request;
 use Lib\Authentication\Auth;
 use Lib\FlashMessage;
-use Core\Http\Controllers\Controller;
 
-class Authenticate implements Middleware
+class AdminAuthenticate implements Middleware
 {
     public function handle(Request $request): void
     {
-        if (!Auth::check()) {
-            FlashMessage::danger('Você deve estar logado para acessar essa página');
+        $user = Auth::user();
+
+        if ($user === null) {
+            FlashMessage::danger('Você não tem permissão para acessar essa página!');
             $this->redirectTo(route('users.login'));
+        }
+
+        if ($user->isCustomer()) {
+            FlashMessage::danger('Apenas Administradores tem permissão para acessar essa página!');
+            $this->redirectTo(route('customer.index'));
         }
     }
 
