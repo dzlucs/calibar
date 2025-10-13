@@ -25,10 +25,8 @@ class PublicPagesAccessCest extends BaseAcceptanceCest
 
         $I->amOnPage('/login');
         $I->fillField('user[email]', $user->email);
-        $I->fillField('user[password]', 'password');
+        $I->fillField('user[password]', 'password456');
         $I->click('Fazer login');
-
-        $I->amOnPage('/login');
 
         $I->seeInCurrentUrl('/customer');
     }
@@ -48,10 +46,8 @@ class PublicPagesAccessCest extends BaseAcceptanceCest
 
         $I->amOnPage('/login');
         $I->fillField('user[email]', $user->email);
-        $I->fillField('user[password]', 'password');
+        $I->fillField('user[password]', 'password789');
         $I->click('Fazer login');
-
-        $I->amOnPage('/login');
 
         $I->seeInCurrentUrl('/admin');
     }

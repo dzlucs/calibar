@@ -27,7 +27,7 @@ class LoginCest extends BaseAcceptanceCest
         $page->fillField('user[email]', $user->email);
         $page->fillField('user[password]', $user->password);
 
-        $page->click('Entrar');
+        $page->click('Fazer login');
 
         $page->see('Login realizado com sucesso!');
         $page->seeInCurrentUrl('/admin');
@@ -40,7 +40,7 @@ class LoginCest extends BaseAcceptanceCest
         $page->fillField('user[email]', 'admin@example');
         $page->fillField('user[password]', 'wrong_password');
 
-        $page->click('Entrar');
+        $page->click('Fazer login');
 
         $page->see('Email e/ou senha inválidos!');
         $page->seeInCurrentUrl('/login');
