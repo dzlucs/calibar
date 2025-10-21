@@ -14,8 +14,8 @@
 
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
-        <link rel="stylesheet" href="assets/css/global.css">
-        <link rel="stylesheet" href="assets/css/dashboard.css">
+        <link rel="stylesheet" href="/assets/css/global.css">
+        <link rel="stylesheet" href="/assets/css/dashboard.css">
     </head>
 
     <body>
@@ -32,30 +32,30 @@
                         </h2>
                     </div>
                 </div>
-                <div class="menu-options">
-                        <a class="user-menu-items" href="#">
+                <div class="sidebar-menu-options">
+                        <a class="sidebar-menu-items" href="#">
                             <span class="material-symbols-outlined">
                                 account_circle
                         </span>
                         Meu Perfil</a>
-                        <a class="user-menu-items" href="#">
+                        <a class="sidebar-menu-items" href="<?= route('admin.index') ?>">
                             <span class="material-symbols-outlined">
                                 home
                         </span>
                         Dashboard</a>
-                        <a class="user-menu-items" href="#">
+                        <a class="sidebar-menu-items" href="#">
                             <span class="material-symbols-outlined">
                                 settings
                             </span>
                         Configurações</a>
                     <?php if ($this->current_user->isAdmin()): ?>
-                        <a class="user-menu-items" href="#">
+                        <a class="sidebar-menu-items" href="<?= route('drinks.index') ?>">
                             <span class="material-symbols-outlined">
                                 local_bar
                             </span>
                         Drinks</a>
                     <?php else: ?>
-                        <a class="user-menu-items" href="#">
+                        <a class="sidebar-menu-items" href="#">
                             <span class="material-symbols-outlined">
                                 local_mall
                             </span>

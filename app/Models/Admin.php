@@ -26,6 +26,16 @@ class Admin extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+/*     public function fleets(): HasMany
+    {
+        return $this->hasMany(Fleet::class, 'manager_id');
+    }*/
+
+    public function drinks(): HasMany
+    {
+        return $this->hasMany(Drink::class, 'admin_id');
+    }
+
     public function validates(): void
     {
         if ($this->user_id == 0) {

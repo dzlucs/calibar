@@ -44,7 +44,9 @@ CREATE TABLE drinks (
   description TEXT,
   category_id INT,
   visibility ENUM('visible', 'invisible') NOT NULL,
-  FOREIGN KEY (category_id) REFERENCES categories(id)
+  admin_id INT NOT NULL,
+  FOREIGN KEY (category_id) REFERENCES categories(id),
+  FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
 );
 
 CREATE TABLE addresses (

@@ -4,6 +4,7 @@ use App\Controllers\AdminController;
 use App\Controllers\HomeController;
 use App\Controllers\AuthenticationsController;
 use App\Controllers\CustomerController;
+use App\Controllers\DrinkController;
 use App\Models\Customer;
 use Core\Router\Route;
 use Core\Router\Router;
@@ -20,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+        Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index');
     });
 
     Route::middleware('customer')->group(function () {
