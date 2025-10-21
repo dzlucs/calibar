@@ -21,7 +21,24 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('admin')->group(function () {
         Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+
+        //CRUD DOS DRINKS
+
+        //CREATE
+        Route::get('/admin/drinks/new', [DrinkController::class, 'new'])->name('drinks.new');
+        Route::post('/admin/drinks', [DrinkController::class, 'create'])->name('drinks.create');
+
+        //READ
         Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index');
+        Route::get('/admin/drinks/{drink_id}', [DrinkController::class, 'show'])->name('drinks.show');
+
+        //UPDATE
+        Route::get('/admin/drinks/{drink_id}/edit', [DrinkController::class, 'edit'])->name('drinks.edit');
+        Route::put('/admin/drinks/{drink_id}', [DrinkController::class, 'update'])->name('drinks.update');
+
+        //DELETE
+        Route::delete('/admin/drinks/{drink_id}', [DrinkController::class, 'destroy'])->name('drinks.destroy');
+
     });
 
     Route::middleware('customer')->group(function () {
