@@ -14,4 +14,18 @@ class DrinkController extends Controller
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
         $this->render('admin/drinks/index', compact('drinks', 'imagePath'), 'dashboard');
     }
+
+    //MÉTODO PARA MOSTRAR UM DRINK EM ESPECÍFICO
+    public function show(Request $request): void
+    {
+        $params = $request->getParams();
+
+        //pegue o usuário atual, busque o id de admin dele, busque todos os drinks associados a esse admin e busque pelo drink específico via id
+        /** @var Drink $drink */
+        $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
+
+        $this->render('admin/drinks/show', compact('drink'));
+    }
+
+    
 }
