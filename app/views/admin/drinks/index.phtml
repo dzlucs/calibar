@@ -3,10 +3,24 @@
     <div class="drink-header">
         <p>seu menu de</p>
         <h1>Drinks cadastrados</h1>
-        <button type="submit" class="btn btn-primary mb-3">Adicionar drink</button>
+        <a href="<?= route('drinks.new') ?>"class="btn btn-primary mb-3">Adicionar drink</a>
     </div>
     <div class="drink-body">
-        Cards...
+        <div class="row">
+        <?php foreach ($drinks as $drink) : ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
+                <div class="card">
+                    <img src="/assets/images/defaults/frota-card.png" class="card-img-top" alt="card-image">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $drink->name ?></h5>
+                        <div class="text-end">
+                            <a href="<?= route('drinks.show', ['drink_id' => $fleet->id]) ?>" class="btn btn-sm btn-secondary-custom custom-hover w-100">Ver mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
     </div>
     <div class="drink-paginator">
         Paginator...

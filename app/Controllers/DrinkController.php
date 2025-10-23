@@ -27,5 +27,13 @@ class DrinkController extends Controller
         $this->render('admin/drinks/show', compact('drink'));
     }
 
-    
+    public function new(): void
+    {
+        //criando uma nova instância de um drink
+        $drink = $this->current_user->admin()->drinks()->new();
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $this->render('admin/drinks/new', compact('drink',  'imagePath'));
+    }
+
+
 }

@@ -23,6 +23,7 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);
 }
 
 .menu-container {

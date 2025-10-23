@@ -1,0 +1,13 @@
+<p>AQUI É /ADMIN/DRINKS/NEW</p>
+
+<h1>Novo Drink</h1>
+<form action="<?= route('drinks.create') ?>" method="POST" class="<?= $drink->hasErrors() ? 'was-validade' : '' ?>" novalidate>
+    <div class="mb-3">
+        <label for="drink_name" class="form-label">Nome do drink</label>
+        <input type="text" value="<?= $drink->name ?>" name="drink[name]" id="drink_name" class="form-control" required>
+        <div class="invalid-feedback"><?= $drink->errors('name') ? 'O campo nome não pode estar vazio!' : '' ?></div>
+    </div>
+    <div>
+        <button type="submit" class="btn btn-sm btn-secondary-custom custom-hover w-100">Adicionar</button>
+    </div>
+</form>
