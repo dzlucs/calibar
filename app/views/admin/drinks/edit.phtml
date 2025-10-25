@@ -1,0 +1,12 @@
+<h1>Editar <?= $drink->name ?></h1>
+<form action="<?= route('drinks.update', ['drink_id' => $drink->id]) ?>" method="POST" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate> 
+    <input type="hidden" name="method" value="POST">
+    <div>
+        <label for="drink_name" class="form-label">Nome:</label>
+        <input type="text" value="<?= $drink->name ?>" name="drink[name]" class="form-control" id="drink_name" required>
+        <div class="invalid-feedback"><?= $drink->error('name') ? 'Campo não pode estar vazio' : '' ?></div>
+    </div>
+    <div class="text-end">
+        <button type="submit" class="btn btn-success">Salvar</button>
+    </div>
+</form>

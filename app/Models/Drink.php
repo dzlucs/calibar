@@ -36,7 +36,7 @@ Class Drink extends Model
     //VERIFICAR NECESSIDADE DO MÉTODO
     public function adminExists(): bool
     {
-        if(Admin::exists($this->admin_id)){
+        if (!Admin::exists(['id' => $this->admin_id])) { //if(Admin::exists($this->admin_id)){
             return true;
         }
 
