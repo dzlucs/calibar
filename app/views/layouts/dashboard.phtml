@@ -71,11 +71,11 @@
         </aside>
         <main>
             <div class="main-container">
+                <div class="flash-msg">
+                    <?php require '_flash_message.phtml'; ?>
+                </div>
                 <div class="view-container">
                     <?php require $view ?>
-                    <div class="flash-msg">
-                        <?php require '_flash_message.phtml'; ?>
-                    </div>
                 </div>
             </div>
         </main>
