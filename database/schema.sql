@@ -37,7 +37,7 @@ CREATE TABLE categories (
   name VARCHAR(255)
 );
 
-CREATE TABLE drinks (
+/* CREATE TABLE drinks (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   price DECIMAL(10,2) NOT NULL,
@@ -46,6 +46,14 @@ CREATE TABLE drinks (
   visibility ENUM('visible', 'invisible') NOT NULL,
   admin_id INT NOT NULL,
   FOREIGN KEY (category_id) REFERENCES categories(id),
+  FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
+); */
+
+CREATE TABLE drinks (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  admin_id INT NOT NULL,
   FOREIGN KEY (admin_id) REFERENCES admins(id) ON DELETE CASCADE
 );
 

@@ -20,6 +20,7 @@ Class Drink extends Model
     protected static array $columns = [
         'name',
         'admin_id',
+        'price',
     ];
 
     public function admin(): BelongsTo
@@ -36,7 +37,7 @@ Class Drink extends Model
     //VERIFICAR NECESSIDADE DO MÉTODO
     public function adminExists(): bool
     {
-        if (!Admin::exists(['id' => $this->admin_id])) { //if(Admin::exists($this->admin_id)){
+        if (Admin::exists(['id' => $this->admin_id])) { //if(Admin::exists($this->admin_id)){
             return true;
         }
 

@@ -11,6 +11,16 @@
         <input type="text" value="<?= $drink->name ?>" name="drink[name]" id="drink_name" class="form-control" required>
         <div class="invalid-feedback"><?= $drink->errors('name') ? 'O campo nome não pode estar vazio!' : '' ?></div>
     </div>
+        <!-- ===== NOVO CAMPO: PREÇO ===== -->
+    <div class="mb-3">
+        <label for="drink_price" class="form-label">Preço (ex: 12.50)</label>
+        <!-- 
+          Usamos type="number" e step="0.01" para valores monetários.
+          O 'name' segue o padrão 'drink[price]'.
+        -->
+        <input type="number" step="0.01" value="<?= $drink->price ?>" name="drink[price]" id="drink_price" class="form-control" required>
+        <div class="invalid-feedback"><?= $drink->errors('price') ? $drink->errors('price') : 'O campo preço não pode estar vazio e deve ser um número!' ?></div>
+    </div>
     <div>
         <button type="submit" class="btn btn-sm btn-secondary-custom custom-hover w-100">Adicionar</button>
     </div>

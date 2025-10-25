@@ -2,28 +2,41 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1><?= $drink->name ?></h1>
         <div class="d-flex align-items-center">
-            <a href="<?php route('drinks.edit', ['drink_id' => $drink->id]) ?>"><i class="bi bi-pencil-square text-secondary-custom fs-2 me-3"></i></a>
+            <a href="<?= route('drinks.edit', ['drink_id' => $drink->id]) ?>"><i class="bi bi-pencil-square text-secondary-custom fs-2 me-3"></i></a>
             <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
                 <i class="ni ni-trash3 text-danger-custom fs-2"></i>
             </button>
         </div>
     </div>
 
-    <div class="row">
-      <?php foreach ($trucks as $truck) : ?>
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
-            <div class="card pt-3">
-                <img src="<?= $truck->truckBrand()->get()->logo()->path() ?>" class="card-img-top w-50 mx-auto d-block" alt="card-image">
+   <div class="row">
+        <div class="col-md-6">
+            <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title"><?php echo "{$truck->truckBrand()->get()->name} {$truck->model}"; ?></h5>
-                    <div class="text-end">
-                        <a href="<?= route('trucks.show', ['fleet_id' => $fleet->id, 'truck_id' => $truck->id]) ?>" class="btn btn-sm btn-secondary-custom custom-hover w-100">Ver mais</a>
+                    <h5 class="card-title">Detalhes do Drink</h5>
+                    <p class="card-text">
+                        <strong>Nome:</strong> <?= htmlspecialchars($drink->name) ?>
+                    </p>
+                    <p class="card-text">
+                        <strong>Preço:</strong> R$ <?= number_format($drink->price, 2, ',', '.') ?>
+                    </p>
+                    <p class="card-text">
+                        <strong>ID do Admin:</strong> <?= htmlspecialchars($drink->admin_id) ?>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- Aqui pode entrar uma galeria de fotos do drink no futuro -->
+            <div class="card">
+                <div class="card-body text-center" style="height: 150px; display: grid; place-items: center;">
+                    <div>
+                        <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
+                        <p class="text-muted">Galeria (em breve)</p>
                     </div>
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
-
     </div>
 </div>
 

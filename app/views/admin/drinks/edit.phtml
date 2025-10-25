@@ -1,12 +1,20 @@
 <h1>Editar <?= $drink->name ?></h1>
 <form action="<?= route('drinks.update', ['drink_id' => $drink->id]) ?>" method="POST" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate> 
-    <input type="hidden" name="method" value="POST">
+    <input type="hidden" name="_method" value="PUT">
     <div>
         <label for="drink_name" class="form-label">Nome:</label>
         <input type="text" value="<?= $drink->name ?>" name="drink[name]" class="form-control" id="drink_name" required>
-        <div class="invalid-feedback"><?= $drink->error('name') ? 'Campo não pode estar vazio' : '' ?></div>
+        <div class="invalid-feedback"><?= $drink->errors('name') ? 'Campo não pode estar vazio' : '' ?></div>
+    </div>
+     <div class="mb-3">
+        <label for="drink_price" class="form-label">Preço (R$):</label>
+        <input type="number" value="<?= htmlspecialchars($drink->price) ?>" name="drink[price]" id="drink_price" class="form-control" step="0.01" required>
+        <div class="invalid-feedback"><?= $drink->errors('price') ? $drink->errors('price') : 'Campo não pode estar vazio' ?></div>
     </div>
     <div class="text-end">
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+            Deletar
+        </button>
         <button type="submit" class="btn btn-success">Salvar</button>
     </div>
 </form>

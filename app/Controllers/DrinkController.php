@@ -11,7 +11,8 @@ class DrinkController extends Controller
 {
     public function index(Request $request): void
     {
-        $drinks = $this->current_user->admin()->drinks()->get();
+        //$drinks = $this->current_user->admin()->drinks()->get();
+        $drinks = Drink::all();
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
         $this->render('admin/drinks/index', compact('drinks', 'imagePath'), 'dashboard');
     }
@@ -24,8 +25,8 @@ class DrinkController extends Controller
         //pegue o usuário atual, busque o id de admin dele, busque todos os drinks associados a esse admin e busque pelo drink específico via id
         /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
-
-        $this->render('admin/drinks/show', compact('drink'));
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $this->render('admin/drinks/show', compact('drink', 'imagePath'));
     }
 
     public function new(): void
@@ -41,6 +42,8 @@ class DrinkController extends Controller
         $params = $request->getParams();
         $drink = $this->current_user->admin()->drinks()->new($params['drink']);
 
+        $drink->admin_id = $this->current_user->admin()->id;        
+
         if ($drink->save()) {
             FlashMessage::success('Drink registrado com sucesso');
             $this->redirectTo(route('drinks.index'));
@@ -55,8 +58,8 @@ class DrinkController extends Controller
     {
         $params = $request->getParams();
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
-
-        $this->render('admin/drinks/edit', compact('drink'));
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $this->render('admin/drinks/edit', compact('drink', 'imagePath'));
     }
 
     public function update(Request $request): void
@@ -67,13 +70,16 @@ class DrinkController extends Controller
         /**  @var \App\Models\Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($id);
         $drink->name = $params['name'];
+        $drink->price = $params['price'];
 
         if ($drink->save()) {
             FlashMessage::success('Drink editado com sucesso!');
-            $this->redirectTo('admin/drinks/' . $drink->id);
+            // $this->redirectTo('admin/drinks/' . $drink->id);
+            $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
         } else {
             FlashMessage::danger('Dados incorretos. Verifique');
-            $this->render('admin/drinks/edit', compact('drink'));
+            $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+            $this->render('admin/drinks/edit', compact('drink', 'imagePath'));
         }
     }
 
