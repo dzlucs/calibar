@@ -38,7 +38,6 @@ Route::middleware('auth')->group(function () {
 
         //DELETE
         Route::delete('/admin/drinks/{drink_id}', [DrinkController::class, 'destroy'])->name('drinks.destroy');
-
     });
 
     Route::middleware('customer')->group(function () {

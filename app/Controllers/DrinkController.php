@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\Drink;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
+use Lib\FlashMessage;
 
 class DrinkController extends Controller
 {
@@ -20,7 +21,6 @@ class DrinkController extends Controller
     {
         $params = $request->getParams();
 
-        //pegue o usuário atual, busque o id de admin dele, busque todos os drinks associados a esse admin e busque pelo drink específico via id
         /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
 
@@ -32,8 +32,20 @@ class DrinkController extends Controller
         //criando uma nova instância de um drink
         $drink = $this->current_user->admin()->drinks()->new();
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
-        $this->render('admin/drinks/new', compact('drink',  'imagePath'));
+        $this->render('admin/drinks/new', compact('drink', 'imagePath'));
     }
 
+    public function create(Request $request): void
+    {
+        $params = $request->getParams();
+        $drink = $this->current_user->admin()->drinks()->new($params['drink']);
 
+        if ($drink->save()) {
+            FlashMessage::success('Drink registrado com sucesso!');
+            $this->redirectTo('drinks.index');
+        } else {
+            FlashMessage::danger('Existem dados incorretos! Por favor verifique');
+            $this->render('admin/drinks/new', compact('drink'));
+        }
+    }
 }

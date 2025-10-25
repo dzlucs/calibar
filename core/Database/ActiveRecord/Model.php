@@ -316,7 +316,7 @@ abstract class Model
         $stmt = $pdo->prepare($sql);
 
         foreach ($conditions as $column => $value) {
-            $stmt->bindValue($column, $value);
+            $stmt->bindValue(":$column", $value);
         }
 
         $stmt->execute();

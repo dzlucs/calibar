@@ -11,10 +11,10 @@ use Lib\Validations;
  * @property int $id
  * @property string $name
  * @property int #admin_id
- * 
+ *
  */
 
-Class Drink extends Model
+class Drink extends Model
 {
     protected static string $table = 'drinks';
     protected static array $columns = [
@@ -36,7 +36,7 @@ Class Drink extends Model
     //VERIFICAR NECESSIDADE DO MÉTODO
     public function adminExists(): bool
     {
-        if(Admin::exists($this->admin_id)){
+        if (Admin::exists(['admin_id', $this->admin_id])) {
             return true;
         }
 
