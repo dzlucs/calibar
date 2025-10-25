@@ -20,11 +20,12 @@ class DrinkController extends Controller
     public function show(Request $request): void
     {
         $params = $request->getParams();
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
         /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
 
-        $this->render('admin/drinks/show', compact('drink'));
+        $this->render('admin/drinks/show', compact('drink', 'imagePath'));
     }
 
     public function new(): void
@@ -49,4 +50,5 @@ class DrinkController extends Controller
             $this->render('admin/drinks/new', compact('drink', 'imagePath'));
         }
     }
+
 }
