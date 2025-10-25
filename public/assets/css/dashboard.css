@@ -7,11 +7,12 @@ html, body {
 body {
   background-color: #FFFBF1;
   display: flex;
+  width: 100%;
 }
 
 main {
-    width: 75%;
-    height: 100%;
+    width: 100%;
+    height: 100vh;
 }
 
 /* sidebar */
@@ -24,6 +25,9 @@ main {
     align-items: center;
     justify-content: center;
     box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);
+    position: fixed; /* fica parada no lado esquerdo */
+    top: 0;
+    left: 0;
 }
 
 .menu-container {
@@ -148,13 +152,14 @@ h2 {
 /* main */
 
 .main-container{
-    width: 100%;
+/*     width: 100%; */
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
     margin: 0;
+    margin-left: 25%; /* evita que o conteúdo fique sob o menu */
+    padding: 2rem;
 }
 
 /* CRUD DRINKS */
@@ -176,7 +181,7 @@ h2 {
 /*     border-radius: 3rem 3rem 0rem 0rem; */
 }
 
-.drink-header h1, p {
+h1, p {
     margin: 0;
     color: #3E52AC;
 }
@@ -195,7 +200,7 @@ h2 {
 
 .drink-body{
     width: 100%;
-    height: 70%;
+    height: 100%;
     background-color: #FFFBF1;
 }
 
@@ -212,10 +217,46 @@ h2 {
     box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);
 }
 
-.drink-paginator{
+.btn-add{
     width: 100%;
-    height: 5%;
+}
+
+.drink-paginator{
+    padding: 3rem 0rem;
+    width: 100%;
+    height: 15%;
     /* background-color: #F87C35; */
+}
+
+.div-form{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.div-form h1 {
+    margin-bottom: 2rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 30%;
+    font-weight: 500;
+}
+
+.submit-btn {
+    margin-top: 3rem;
+}
+
+.flash-msg {
+    height: 1rem;
+    width: 32.5vw;
+    margin-top: 5rem;
 }
 
 

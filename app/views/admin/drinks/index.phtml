@@ -10,11 +10,11 @@
         <?php foreach ($drinks as $drink) : ?>
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
                 <div class="card">
-                    <img src="/assets/images/defaults/frota-card.png" class="card-img-top" alt="card-image">
+                    <img src="/assets/images/defaults/drink-1.jpeg" class="card-img-top" alt="card-image">
                     <div class="card-body">
                         <h5 class="card-title"><?= $drink->name ?></h5>
                         <div class="text-end">
-                            <a href="<?= route('drinks.show', ['drink_id' => $fleet->id]) ?>" class="btn btn-sm btn-secondary-custom custom-hover w-100">Ver mais</a>
+                            <a href="<?= route('drinks.show', ['drink_id' => $drink->id]) ?>" class="btn btn-sm btn-secondary-custom custom-hover w-100">Ver mais</a>
                         </div>
                     </div>
                 </div>

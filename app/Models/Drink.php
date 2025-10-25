@@ -19,7 +19,8 @@ class Drink extends Model
     protected static string $table = 'drinks';
     protected static array $columns = [
         'name',
-        'admin_id',
+        'price',
+        'admin_id'
     ];
 
     public function admin(): BelongsTo
@@ -30,6 +31,7 @@ class Drink extends Model
     public function validates(): void
     {
         Validations::notEmpty('name', $this);
+        Validations::notEmpty('price', $this);
         $this->adminExists();
     }
 
@@ -45,10 +47,10 @@ class Drink extends Model
     }
 
     //VERIFICAR MÉTODOS COM COMENTÁRIO NA PR**
-    public function addError(string $attribute, string $message): void
+/*     public function addError(string $attribute, string $message): void
     {
         $this->errors[$attribute] = "{$attribute} {$message}";
-    }
+    } */
 
     /**
     *@return string[] List of error messages, each as a string.

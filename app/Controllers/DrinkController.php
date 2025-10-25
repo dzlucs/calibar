@@ -39,13 +39,14 @@ class DrinkController extends Controller
     {
         $params = $request->getParams();
         $drink = $this->current_user->admin()->drinks()->new($params['drink']);
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
         if ($drink->save()) {
             FlashMessage::success('Drink registrado com sucesso!');
-            $this->redirectTo('drinks.index');
+            $this->redirectTo(route('drinks.index'));
         } else {
             FlashMessage::danger('Existem dados incorretos! Por favor verifique');
-            $this->render('admin/drinks/new', compact('drink'));
+            $this->render('admin/drinks/new', compact('drink', 'imagePath'));
         }
     }
 }
