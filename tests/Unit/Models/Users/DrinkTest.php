@@ -46,4 +46,17 @@ class DrinkTest extends TestCase
         $this->assertTrue($drink2->save());
         $this->assertCount(2, Drink::all());
     }
+
+        public function test_destroy_should_delete_a_drink(): void
+    {
+        $drink2 = $this->admin->drinks()->new([
+            'name' => 'drink test 2',
+            'price' => '39.90',  
+        ]);
+        $drink2->save();
+        $this->assertCount(2, Drink::all());
+
+        $drink2->destroy();
+        $this->assertCount(1, Drink::all());
+    }
 }
