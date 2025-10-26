@@ -173,6 +173,9 @@ h2 {
     align-items: flex-start;
     justify-content: center;
 /*     border-radius: 3rem 3rem 0rem 0rem; */
+    position: relative;
+    z-index: 100;
+    position: relative;
 }
 
 h1, p {
@@ -193,9 +196,9 @@ h1, p {
 }
 
 .drink-body{
-/*     width: 100%; */
-/*     height: 100%; */
+    width: 100%;
     background-color: #FFFBF1;
+    min-height: auto; /* ou height: auto */
 }
 
 .btn-primary {
@@ -217,13 +220,18 @@ h1, p {
 
 .drink-paginator{
     width: 100%;
-/*     background-color: green; */
-    height: 5rem;
+    /* background-color: green;  */
+    height: 15%;
     display: flex;
     margin: 0;
     align-items: center;
+    justify-content: flex-start;
 /*     padding: 3rem 0rem; */
     /* background-color: #F87C35; */
+/*     position: relative;
+    z-index: 99; */
+    position: relative;
+    z-index: 1; /* menor que o header */
 }
 
 .div-form{
