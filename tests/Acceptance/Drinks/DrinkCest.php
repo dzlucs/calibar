@@ -48,4 +48,33 @@ class DrinkCest extends BaseAcceptanceCest
         $page->click('Adicionar');
         $page->waitForText('Drink registrado com sucesso!');
     }
+
+    public function create_drink_unsuccessfully(AcceptanceTester $page): void
+    {
+        $this->setUp();
+
+        $page->login($this->user->email, $this->user->password);
+
+        $page->amOnPage('/admin/drinks');
+        
+        $page->click('Adicionar drink');
+
+        $page->amOnPage('/admin/drinks/new');
+
+        $page->fillField('#drink_name', '');
+        $page->fillField('#drink_price', '49.90');
+        $page->click('Adicionar');
+        $page->see('O campo nome não pode estar vazio!');
+
+        $page->fillField('#drink_name', 'Drink de teste');
+        $page->fillField('#drink_price', '');
+        $page->click('Adicionar');
+        $page->see('O campo preço não pode estar vazio!');
+
+        $page->fillField('#drink_name', '');
+        $page->fillField('#drink_price', '');
+        $page->click('Adicionar');
+        $page->see('O campo preço não pode estar vazio!');
+        $page->see('O campo nome não pode estar vazio!');
+    }
 }
