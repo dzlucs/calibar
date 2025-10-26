@@ -60,6 +60,32 @@ class DrinkController extends Controller
         $this->render('admin/drinks/edit', compact('drink', 'imagePath'));
     }
 
+    public function update(Request $request): void
+    {
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+
+        $params = $request->getParams();
+        $drinkParams = $params['drink'];
+
+        $id = $params['drink_id'];
+
+/*         var_dump($params);
+        die(); */
+
+        /** @var \App\Models\Drink $drink */
+        $drink = $this->current_user->admin()->drinks()->findById($id);
+        $drink->name = $drinkParams['name'];
+        $drink->price = $drinkParams['price'];
+
+        if ($drink->save()) {
+            FlashMessage::success('Drink editado com sucesso!');
+            $this->redirectTo('/admin/drinks/' . $drink->id);
+        } else {
+            FlashMessage::danger('Existem dados incorretos. Por favor, verifique.');
+            $this->render('admin/drinks/edit', compact('drink', 'imagePath'));
+        }
+    }
+
     public function destroy(Request $request): void
     {
         $params = $request->getParams();
@@ -71,5 +97,4 @@ class DrinkController extends Controller
         FlashMessage::success('Drink removido com sucesso!');
         $this->redirectTo(route('drinks.index'));
     }
-
 }

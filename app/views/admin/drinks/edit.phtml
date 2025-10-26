@@ -1,0 +1,19 @@
+<div class="div-form">
+    <h1>Editar  "<?php echo "{$drink->name}"; ?>" </h1>
+    <form action="<?= route('drinks.update', ['drink_id' => $drink->id]) ?>" method="POST" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+        <input type="hidden" name="_method" value="PUT">
+        <div class="mb-3">
+            <label for="drink_name" class="form-label">Nome do drink</label>
+            <input type="text" value="<?= $drink->name ?>" name="drink[name]" id="drink_name" class="form-control" required>
+            <div class="invalid-feedback"><?= $drink->errors('name') ? 'O campo nome não pode estar vazio!' : '' ?></div>
+        </div>
+        <div class="mb-3">
+            <label for="drink_price" class="form-label">Preço</label>
+            <input type="text" value="<?= $drink->price ?>" name="drink[price]" id="drink_price" class="form-control" required>
+            <div class="invalid-feedback"><?= $drink->errors('price') ? 'O campo preço não pode estar vazio!' : '' ?>
+        </div>
+        <div class="submit-btn">
+            <button type="submit" class="btn btn-primary btn-add mb-3">Salvar</button>
+        </div>
+    </form>
+</div>
