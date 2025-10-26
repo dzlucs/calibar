@@ -11,9 +11,12 @@ class DrinkController extends Controller
 {
     public function index(Request $request): void
     {
-        $drinks = $this->current_user->admin()->drinks()->get();
+        $paginator = Drink::paginate(page: $request->getParam('page', 1));
+        $drinks = $paginator->registers();
+
+        //$drinks = $this->current_user->admin()->drinks()->get();
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
-        $this->render('admin/drinks/index', compact('drinks', 'imagePath'), 'dashboard');
+        $this->render('admin/drinks/index', compact('drinks', 'imagePath', 'paginator'), 'dashboard');
     }
 
     //MÉTODO PARA MOSTRAR UM DRINK EM ESPECÍFICO

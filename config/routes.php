@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
 
         //READ
         Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index');
+        Route::get('/admin/drinks/page/{page}', [DrinkController::class, 'index'])->name('drinks.paginate');
         Route::get('/admin/drinks/{drink_id}', [DrinkController::class, 'show'])->name('drinks.show');
 
         //UPDATE
