@@ -39,15 +39,11 @@ class DrinkCest extends BaseAcceptanceCest
         $page->login($this->user->email, $this->user->password);
 
         $page->amOnPage('/admin/drinks');
-        $page->waitForElementVisible('a[href="/admin/drinks/new"]', 10);
-        $page->scrollTo('a[href="/admin/drinks/new"]');
-
         
-        $page->waitForText('Adicionar drink');
-        $page->click('a[href="/admin/drinks/new"]');
+        $page->click('Adicionar drink');
 
-        $page->fillField('drink_name', 'Drink de teste');
-        $page->fillField('drink_price', '49.90');
+        $page->fillField('#drink_name', 'Drink de teste');
+        $page->fillField('#drink_price', '49.90');
 
         $page->click('Adicionar');
         $page->waitForText('Drink registrado com sucesso!');
