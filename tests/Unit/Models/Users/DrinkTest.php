@@ -59,4 +59,18 @@ class DrinkTest extends TestCase
         $drink2->destroy();
         $this->assertCount(1, Drink::all());
     }
+
+    public function test_should_return_all_drinks(): void
+    {
+        $drinks[] = $this->drink;
+        $drinks[] = $this->admin->drinks()->new([
+            'name' => 'drink test 2',
+            'price' => '39.90',  
+        ]);
+        $drinks[1]->save();
+
+        $all = Drink::all();
+        $this->assertCount(2, $all);
+        $this->assertEquals($drinks, $all);
+    }
 }
