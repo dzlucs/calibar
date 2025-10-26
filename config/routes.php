@@ -20,25 +20,25 @@ Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthenticationsController::class, 'destroy'])->name('users.logout');
 
     Route::middleware('admin')->group(function () {
-        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+        Route::get('/admin', [AdminController::class, 'index'])->name('admin.index'); //ok
 
         //CRUD DOS DRINKS
 
         //CREATE
-        Route::get('/admin/drinks/new', [DrinkController::class, 'new'])->name('drinks.new');
-        Route::post('/admin/drinks', [DrinkController::class, 'create'])->name('drinks.create');
+        Route::get('/admin/drinks/new', [DrinkController::class, 'new'])->name('drinks.new');//ok
+        Route::post('/admin/drinks', [DrinkController::class, 'create'])->name('drinks.create');//ok
 
         //READ
-        Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index');
+        Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index'); //ok
         Route::get('/admin/drinks/page/{page}', [DrinkController::class, 'index'])->name('drinks.paginate');
-        Route::get('/admin/drinks/{drink_id}', [DrinkController::class, 'show'])->name('drinks.show');
+        Route::get('/admin/drinks/{drink_id}', [DrinkController::class, 'show'])->name('drinks.show');//ok
 
         //UPDATE
-        Route::get('/admin/drinks/{drink_id}/edit', [DrinkController::class, 'edit'])->name('drinks.edit');
-        Route::put('/admin/drinks/{drink_id}', [DrinkController::class, 'update'])->name('drinks.update');
+        Route::get('/admin/drinks/{drink_id}/edit', [DrinkController::class, 'edit'])->name('drinks.edit');//ok
+        Route::put('/admin/drinks/{drink_id}', [DrinkController::class, 'update'])->name('drinks.update');//ok
 
         //DELETE
-        Route::delete('/admin/drinks/{drink_id}', [DrinkController::class, 'destroy'])->name('drinks.destroy');
+        Route::delete('/admin/drinks/{drink_id}', [DrinkController::class, 'destroy'])->name('drinks.destroy');//ok
     });
 
     Route::middleware('customer')->group(function () {
