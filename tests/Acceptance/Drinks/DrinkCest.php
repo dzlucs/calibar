@@ -30,6 +30,12 @@ class DrinkCest extends BaseAcceptanceCest
         ]);
 
         $this->admin->save();
+
+/*         $this->drink = new Drink([
+            'name' => 'drink teste',
+            'price' => '29,90'
+        ]);
+        $this->drink->save(); */
     }
 
     public function create_drink_successfully(AcceptanceTester $page): void
@@ -76,5 +82,36 @@ class DrinkCest extends BaseAcceptanceCest
         $page->click('Adicionar');
         $page->see('O campo preço não pode estar vazio!');
         $page->see('O campo nome não pode estar vazio!');
+    }
+
+    public function remove_drink(AcceptanceTester $page): void
+    {
+        $this->setUp();
+
+        $page->login($this->user->email, $this->user->password);
+
+        $page->amOnPage('/admin/drinks');
+        
+        $page->click('Adicionar drink');
+
+        $page->fillField('#drink_name', 'Drink de teste');
+        $page->fillField('#drink_price', '49.90');
+
+        $page->click('Adicionar');
+        $page->waitForText('Drink registrado com sucesso!');
+
+        $page->see('Ver mais');
+        $page->click('Ver mais');
+
+        $page->waitForText('Drink de teste');
+
+        $page->click("#trash-icon");
+
+        $page->wait(2);
+        $page->makeScreenshot('before_modal_click');
+        $page->waitForElement('#deleteModal', 5);
+
+        $page->click('#delete-btn-modal');
+        $page->see('Drink removido com sucesso!');
     }
 }
