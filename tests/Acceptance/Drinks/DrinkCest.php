@@ -114,4 +114,38 @@ class DrinkCest extends BaseAcceptanceCest
         $page->click('#delete-btn-modal');
         $page->see('Drink removido com sucesso!');
     }
+
+    public function update_drink_succesfully(AcceptanceTester $page): void
+    {
+        $this->setUp();
+
+        $page->login($this->user->email, $this->user->password);
+
+        $page->amOnPage('/admin/drinks');
+        
+        $page->click('Adicionar drink');
+
+        $page->fillField('#drink_name', 'Drink de teste');
+        $page->fillField('#drink_price', '49.90');
+
+        $page->click('Adicionar');
+        $page->waitForText('Drink registrado com sucesso!');
+
+        $page->see('Ver mais');
+        $page->click('Ver mais');
+
+        $page->waitForText('Drink de teste');
+
+        $page->click("#pencil-icon");
+
+        $page->wait(2);
+        $page->makeScreenshot('before_icon_click');
+
+        $page->fillField('#drink_name', 'Novo drink de teste');
+        $page->fillField('#drink_price', '29.90');
+        $page->click('Salvar');
+
+        $page->makeScreenshot('after_icon_click');
+        $page->see('Drink editado com sucesso!');
+    }
 }
