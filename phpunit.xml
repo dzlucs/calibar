@@ -5,7 +5,7 @@
   displayDetailsOnTestsThatTriggerWarnings="true">
   <php>
     <env name="APP_ENV" value="testing" />
-    <env name="DB_HOST" value="db" />
+    <env name="DB_HOST" value="calibar-db-1" />
     <env name="DB_PORT" value="3306" />
     <env name="DB_DATABASE" value="bar_test" />
     <env name="DB_USERNAME" value="root" />
