@@ -14,7 +14,6 @@ class DrinkCest extends BaseAcceptanceCest
 {
     private User $user;
     private Admin $admin;
-    private Drink $drink;
 
     private function setUp(): void
     {
