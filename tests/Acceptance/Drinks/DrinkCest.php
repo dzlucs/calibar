@@ -229,4 +229,49 @@ class DrinkCest extends BaseAcceptanceCest
 
         $page->makeScreenshot('list_all_drinks');
     }
+
+    public function test_drinks_pagination(AcceptanceTester $page): void
+    {
+        $user = new User([
+            'name' => 'Admin 1',
+            'email' => 'admin@one.com',
+            'password' => '123456',
+            'password_confirmation' => '123456'
+        ]);
+        $user->save();
+
+        $admin = new Admin(['user_id' => $user->id]);
+        $admin->save();
+
+        $page->login($user->email, $user->password);
+
+        $page->amOnPage('/admin/drinks');
+
+        $page->makeScreenshot('page_before');
+
+        for ($i = 1; $i <= 10; $i++) {
+            $page->click('Adicionar drink');
+
+            $page->fillField('#drink_name', 'Drink de teste' . $i);
+            $page->fillField('#drink_price', '49.90');
+
+            $page->click('Adicionar');
+            $page->waitForText('Drink registrado com sucesso!');
+        }
+
+        $page->makeScreenshot('page_after');
+
+        //problemas com overlay das divs e paginator
+        $page->executeJS('
+            const el = document.querySelector("a.page-link[href=\'/admin/drinks/page/2\']");
+            if(el){
+                el.scrollIntoView();
+                el.click();
+            }
+        ');
+
+        $page->seeInCurrentUrl('/admin/drinks/page/2');
+
+        $page->makeScreenshot('page_2');
+    }
 }
