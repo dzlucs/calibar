@@ -1,93 +1,273 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
 body {
   background-color: #FFFBF1;
+  display: flex;
+  width: 100%;
 }
 
-.btn-logout {
+main {
     width: 100%;
+    height: 100vh;
 }
 
-.btn {
-    width: 100%;
-    height: 3rem;
-    font-weight: 700;
-    font-size: 1.3rem;
-    background-color: #f87c35;
-    border: none;
-    cursor: pointer;
-    transition: 
-        box-shadow 0.2s ease, 
-        transform 0.2s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
+/* sidebar */
 
-.btn:hover {
-    background-color: #fa610a;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px); /* opcional para reforçar a sensação de pulo leve */
-}
-
-
-.container{
-    background-color: #3E52AC;
-    width: 50vw;
-    height: 50vh;
-    border-radius: 2rem;
-    display: flex;
-    padding: 0;
-    box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);   
-}
-
-.container-img{
-    width: 20vw;
-    height: 50vh;
-    border-radius: 2rem 0rem 0rem 2rem;
+.sidebar{
+    width: 25%;
+    height: 100vh;
     background-color: #3E52AC;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);
+    position: fixed; /* fica parada no lado esquerdo */
+    top: 0;
+    left: 0;
+}
+
+.menu-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.img-container {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profile-img{
     width: 200px;
     height: 200px;
-/*     background-color: green; */
     border-radius: 50%;
-/*     background-image: url(../images/defaults/girl-profile.jpeg);
-    background-size: cover;
-    background-position: center; */
+    box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);  
 }
 
-.container-form{
-    width: 30vw;
+.img-container h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    padding: .1rem;
+}
+
+.user-identification {
+    margin-top: 0.9rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-role {
+    color: #f87c35;
+    font-weight: 700;
+}
+
+.sidebar-menu-options {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.sidebar-menu-items {
+    width: 50%;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1rem;
+    text-decoration: none;
+    color: #FFFBF1;
+    font-size: 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: color 0.6s ease;
+}
+
+.sidebar-menu-items:hover {
+    color: #f87c35;
+}
+
+.view-container{
+/*     background-color: green; */
+    width: 90%;
     height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+/*     box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20); */
+/*     border-radius: 3rem;   */
 }
 
 h2 {
-    margin-bottom: 2rem;
     color: #FFFBF1;
     font-size: 2rem;
 }
 
-.flash-msg {
-    height: 1rem;
-    width: 50vw;
-    margin-top: 1rem;
+.logout-form {
+    width: 50%;
+    height: 5%;
 }
 
-.profile-info {
-    /* background-color: red; */
-    height: 25vh;
+.logout-btn {
+    all: unset;
+    width: 100%;
+    height: 4rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: #FFFBF1;
+    cursor: pointer;
+    transition: color 0.6s ease;
 }
 
+.logout-btn:hover {
+    color: #f87c35;
+}
 
+/* main */
+
+.main-container{
+/*     width: 100%; */
+    height: 100%;
+/*     display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly; */
+    margin-left: 28%; /* evita que o conteúdo fique sob o menu */
+    padding: 2rem;
+}
+
+/* CRUD DRINKS */
+
+.drink-container{
+    width: 100%;
+    height: 100%;
+/*     background-color: yellow; */
+}
+
+.drink-header{
+    width: 100%;
+    height: 15%;
+    background-color: #FFFBF1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+/*     border-radius: 3rem 3rem 0rem 0rem; */
+    position: relative;
+    z-index: 100;
+    position: relative;
+}
+
+h1, p {
+    margin: 0;
+    color: #3E52AC;
+}
+
+.drink-header h1 {
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.drink-header p {
+    font-size: 1.3rem;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.drink-body{
+    width: 100%;
+    background-color: #FFFBF1;
+    min-height: auto; /* ou height: auto */
+}
+
+.btn-primary {
+    background-color: #F87C35;
+    color: #FFFBF0;
+    border: #F87C35;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-primary:hover{
+    background-color: #3E52AC;
+    box-shadow: 5px 10px 24px rgba(0, 0, 0, 0.20);
+}
+
+.btn-add{
+    width: 100%;
+}
+
+.drink-paginator{
+    width: 100%;
+    /* background-color: green;  */
+    height: 15%;
+    display: flex;
+    margin: 0;
+    align-items: center;
+    justify-content: flex-start;
+/*     padding: 3rem 0rem; */
+    /* background-color: #F87C35; */
+/*     position: relative;
+    z-index: 99; */
+    position: relative;
+    z-index: 1; /* menor que o header */
+}
+
+.div-form{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.div-form h1 {
+    margin-bottom: 2rem;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 30%;
+    font-weight: 500;
+}
+
+.submit-btn {
+    margin-top: 3rem;
+}
+
+.flash-msg {
+    height: 5rem;
+    width: 90%;
+    margin: 0;
+}
+
+.paginator-info {
+    height: 5rem;
+}
 
 
 

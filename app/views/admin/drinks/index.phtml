@@ -1,0 +1,26 @@
+<div class="drink-container">
+    <div class="drink-header">
+        <p>seu menu de</p>
+        <h1>Drinks cadastrados</h1>
+        <a href="<?= route('drinks.new') ?>"class="btn btn-primary mb-3">Adicionar drink</a>
+    </div>
+    <div class="drink-body">
+        <div class="row">
+        <?php foreach ($drinks as $drink) : ?>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2" id="drink-card-<?= $drink->id ?>">
+                <div class="card">
+                    <img src="/assets/images/defaults/drink-1.jpeg" class="card-img-top" alt="card-image">
+                    <div class="card-body">
+                        <h5 class="card-title"><?= $drink->name ?></h5>
+                        <div class="text-end">
+                            <a href="<?= route('drinks.show', ['drink_id' => $drink->id]) ?>" class="btn btn-primary w-100 mt-4">Ver mais</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <div class="drink-paginator">
+        <?php $paginator->renderPagesNavigation(); ?>
+    </div>
+</div>

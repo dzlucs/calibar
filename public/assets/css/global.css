@@ -1,4 +1,4 @@
-main {
+/* main {
     padding: 0;
     display: flex;
     flex-direction: column;
@@ -25,5 +25,5 @@ main {
 .btn:hover {
     background-color: #fa610a;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px); /* opcional para reforçar a sensação de pulo leve */
-}
+    transform: translateY(-2px);
+} */

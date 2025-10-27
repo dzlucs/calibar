@@ -8,6 +8,9 @@ html
 *.log
 *.temp
 
+# Ignoring all nginx logs files
+log/nginx/*.log
+
 # Ignore vendor folder
 /vendor/
 

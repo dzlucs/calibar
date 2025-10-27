@@ -8,7 +8,7 @@ use Lib\Authentication\Auth;
 
 class Controller
 {
-    protected string $defaultLayout = 'application';
+    protected string $defaultLayout = 'dashboard';
 
     protected ?User $current_user = null;
 

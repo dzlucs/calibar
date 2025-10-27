@@ -1,0 +1,47 @@
+<div class="drink-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1><?= $drink->name ?></h1>
+        <div class="d-flex align-items-center">
+            <a href="<?= route('drinks.edit', ['drink_id' => $drink->id]) ?>" id="pencil-icon"><i class="bi bi-pencil-square text-secondary-custom fs-2 me-3"></i></a>
+            <button type="button" id="trash-icon" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash3 text-danger-custom fs-2 me-3"></i>
+            </button>
+            <a href="<?= route('drinks.new', ['drink_id' => $drink->id]) ?>"><i class="bi bi-plus-circle fs-2 me-3"></i></a>
+        </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-4 col-lg-4 g-4 mb-2">
+            <div class="card">
+                <img src="/assets/images/defaults/drink-1.jpeg" class="card-img-top" alt="card-image">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo "{$drink->name}"; ?></h5>
+                    <h5 class="card-title"><?php echo "R$" . "{$drink->price}"; ?></h5>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<!-- Modal de Confirmação da Exclusão -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteModalLabel">Confirmar Exclusão</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Você tem certeza de que deseja excluir esse drink? Esta ação não poderá ser desfeita</h6>
+        <p class="text-danger-custom">Todos os dados vinculados ao drink serão excluídos!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <form action="<?= route('drinks.destroy', ['drink_id' => $drink->id,]) ?>" method="POST" id="deleteDrinkForm">
+          <input type="hidden" name="_method" value="DELETE">
+          <button type="submit" class="btn btn-danger" id="delete-btn-modal">Excluir</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
