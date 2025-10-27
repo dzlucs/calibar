@@ -10,7 +10,7 @@ use Lib\Validations;
 /**
  * @property int $id
  * @property string $name
- * @property int #admin_id
+ * @property int $admin_id
  *
  */
 
