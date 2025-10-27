@@ -73,4 +73,19 @@ class DrinkTest extends TestCase
         $this->assertCount(2, $all);
         $this->assertEquals($drinks, $all);
     }
+
+    public function test_should_return_error_if_name_is_empty(): void
+    {
+        $drink2 = $this->admin->drinks()->new([
+            'name' => 'drink test 2',
+            'price' => '39.90',  
+        ]);
+        $drink2->name = '';
+
+        $this->assertFalse($drink2->isValid());
+        $this->assertFalse($drink2->save());
+        $this->assertTrue($drink2->hasErrors());
+
+        $this->assertEquals('não pode ser vazio!', $drink2->errors('name'));
+    }
 }
