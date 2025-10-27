@@ -1,5 +1,7 @@
 <?php
 
+// phpcs:disable PSR1.Methods.CamelCapsMethodName
+
 namespace Tests\Acceptance\Drinks;
 
 use App\Models\Admin;
@@ -22,7 +24,7 @@ class DrinkCest extends BaseAcceptanceCest
             'password' => '123',
             'password_confirmation' => '123'
         ]);
-        
+
         $this->user->save();
 
         $this->admin = new Admin([
@@ -45,7 +47,7 @@ class DrinkCest extends BaseAcceptanceCest
         $page->login($this->user->email, $this->user->password);
 
         $page->amOnPage('/admin/drinks');
-        
+
         $page->click('Adicionar drink');
 
         $page->fillField('#drink_name', 'Drink de teste');
@@ -62,7 +64,7 @@ class DrinkCest extends BaseAcceptanceCest
         $page->login($this->user->email, $this->user->password);
 
         $page->amOnPage('/admin/drinks');
-        
+
         $page->click('Adicionar drink');
 
         $page->amOnPage('/admin/drinks/new');
@@ -91,7 +93,7 @@ class DrinkCest extends BaseAcceptanceCest
         $page->login($this->user->email, $this->user->password);
 
         $page->amOnPage('/admin/drinks');
-        
+
         $page->click('Adicionar drink');
 
         $page->fillField('#drink_name', 'Drink de teste');
@@ -122,7 +124,7 @@ class DrinkCest extends BaseAcceptanceCest
         $page->login($this->user->email, $this->user->password);
 
         $page->amOnPage('/admin/drinks');
-        
+
         $page->click('Adicionar drink');
 
         $page->fillField('#drink_name', 'Drink de teste');
@@ -156,7 +158,7 @@ class DrinkCest extends BaseAcceptanceCest
         $page->login($this->user->email, $this->user->password);
 
         $page->amOnPage('/admin/drinks');
-        
+
         $page->click('Adicionar drink');
 
         $page->fillField('#drink_name', 'Drink de teste');

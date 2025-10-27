@@ -31,7 +31,7 @@ class DrinkTest extends TestCase
 
         $this->drink = new Drink([
             'name' => 'drink test 1',
-            'price' => '49.90',  
+            'price' => '49.90',
             'admin_id' => $this->admin->id
         ]);
         $this->drink->save();
@@ -41,17 +41,17 @@ class DrinkTest extends TestCase
     {
         $drink2 = $this->admin->drinks()->new([
             'name' => 'drink test 2',
-            'price' => '39.90',  
+            'price' => '39.90',
         ]);
         $this->assertTrue($drink2->save());
         $this->assertCount(2, Drink::all());
     }
 
-        public function test_destroy_should_delete_a_drink(): void
+    public function test_destroy_should_delete_a_drink(): void
     {
         $drink2 = $this->admin->drinks()->new([
-            'name' => 'drink test 2',
-            'price' => '39.90',  
+        'name' => 'drink test 2',
+        'price' => '39.90',
         ]);
         $drink2->save();
         $this->assertCount(2, Drink::all());
@@ -65,7 +65,7 @@ class DrinkTest extends TestCase
         $drinks[] = $this->drink;
         $drinks[] = $this->admin->drinks()->new([
             'name' => 'drink test 2',
-            'price' => '39.90',  
+            'price' => '39.90',
         ]);
         $drinks[1]->save();
 
@@ -78,7 +78,7 @@ class DrinkTest extends TestCase
     {
         $drink2 = $this->admin->drinks()->new([
             'name' => 'drink test 2',
-            'price' => '39.90',  
+            'price' => '39.90',
         ]);
         $drink2->name = '';
 
