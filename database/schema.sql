@@ -87,11 +87,12 @@ CREATE TABLE cart_items(
   FOREIGN KEY (drink_id) REFERENCES drinks(id)
 );
 
-CREATE TABLE galleries (
+/*image_name ao invés de path*/
+CREATE TABLE drink_images (
   id INT AUTO_INCREMENT PRIMARY KEY,
   drink_id INT NOT NULL,
   path VARCHAR(255),
-  FOREIGN KEY (drink_id) REFERENCES drinks(id)
+  FOREIGN KEY (drink_id) REFERENCES drinks(id) ON DELETE CASCADE
 );
 
 CREATE TABLE orders (

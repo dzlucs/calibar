@@ -12,6 +12,7 @@ use Lib\Validations;
  * @property string $name
  * @property string $price
  * @property int $admin_id
+ * @property \App\Models\DrinkImage[] $images
  *
  */
 
@@ -21,8 +22,13 @@ class Drink extends Model
     protected static array $columns = [
         'name',
         'price',
-        'admin_id'
+        'admin_id',
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(DrinkImage::class, 'drink_id');
+    }
 
     public function admin(): BelongsTo
     {
