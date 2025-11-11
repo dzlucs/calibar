@@ -2,25 +2,25 @@
 
 namespace App\Services;
 
+use App\Models\Drink;
 use Core\Constants\Constants;
 use Core\Database\ActiveRecord\Model;
+use RuntimeException;
 
 class DrinkGallery
 {
+   /** @var string $savedFileName */
+   private ?string $savedFileName = null;
+
    /** @var array<string, mixed> $image */
    private array $image; //arquivo que user enviou no form
 
    public function __construct(
-      private Model $model,
+      private Drink $model,
       /** @var array<string, string|array<string>> $validations */
       private array $validations = []
    ) {  
    }
-
-   /* public function path(): string
-   {
-      if($this->model->)
-   } */
 
    public function create(array $image): bool
    {
@@ -30,16 +30,70 @@ class DrinkGallery
          return false;
       }
 
-      return $this->createFile(); // será implementado
+      $this->savedFileName = $this->generateUniqueFileName();
+
+      return $this->storeNewImage();
    }
 
-/*    public function createFile(): bool
+   public function storeNewImage(): bool
    {
-      
-   } */
+      if (empty($this->getTmpFilePath())){
+         return false;
+      }
+
+      $moved = move_uploaded_file(
+         $this->getTmpFilePath(),
+         $this->getAbsoluteDestinationPath()
+      );
+
+      if (!$moved) {
+         $error = error_get_last();
+         throw new \RuntimeException(
+            'Failed to move uploaded file: ' . ($error['message'] ?? 'Unknown error')
+         );
+      }
+
+      //criando uma nova instância da imagem
+      $newImage = $this->model->images()->new([
+         'drink_id'   => $this->model->id,
+         'image_name' => $this->savedFileName
+      ]);
+
+      //criando o registro da imagem no banco e retornando o status
+      return $newImage->save();
+   }
+
+   //monta o caminho relativo
+   public function baseDir(): string
+   {
+      return "/assets/uploads/{$this->model::table()}/{$this->model->id}/";
+   }
+
+   public function absoluteBaseDir(): string
+   {
+    // caminho físico no sistema de arquivos (usado em unlink(), mkdir(), etc)
+    return __DIR__ . "/../../public" . $this->baseDir();
+   }
+
+   //constrói o caminho absoluto no servidor
+   public function storeDir(): string
+   {
+      $path = Constants::rootPath()->join('public' . $this->baseDir());
+      if (!is_dir($path)) {
+         mkdir(directory: $path, recursive: true);
+      }
+
+      return $path;
+   }
+
+   //retorna caminho absoluto final da imagem no servidor - local exato onde será salvo
+   public function getAbsoluteDestinationPath(): string
+   {
+      return $this->storeDir() . $this->savedFileName;
+   }
 
    //Garantindo que nenhuma imagem tenha nome repetido e sobreescreva outra imagem
-   public function getFileName(): string
+   public function generateUniqueFileName(): string
    {
 
       $file_name = pathinfo($this->image['name'], PATHINFO_FILENAME);
@@ -47,6 +101,12 @@ class DrinkGallery
       $unique_id = uniqid();
 
       return "{$file_name}_{$unique_id}.{$file_extension}";
+   }
+
+   //caminho temporário no array da imagem
+   public function getTmpFilePath(): string
+   {
+      return $this->image['tmp_name'];
    }
 
    private function isValidImage(): bool
@@ -78,5 +138,45 @@ class DrinkGallery
       if ($this->image['size'] > $this->validations['size']) {
          $this->model->addError('image_name', 'A imagem deve ter no máximo 2MB!');
       }
+   }
+
+   public function firstSavedImagePath(): string
+   {
+      $images = $this->model->images()->get();
+
+      if (!empty($images)){
+         $first = $images[0];
+         return $this->baseDir() . $first->image_name;
+      }
+
+      return "/assets/images/defaults/drink-1.jpeg";
+   }
+
+   public function destroyAllImages(): void
+   {
+
+      $images = $this->model->images()->get();
+      $dirPath = $this->storeDir();
+
+      foreach ($images as $image) {
+         $path = $dirPath . $image->image_name;
+      
+         if (file_exists($path)) {
+            unlink($path);
+         }
+      }
+
+
+      // garantir que o diretório está vazio antes de remover
+      if (is_dir($dirPath)) {
+         $files = glob($dirPath . '*');
+         foreach ($files as $file) {
+            if (is_file($file)) {
+               unlink($file);
+            }
+         }
+      }
+
+      rmdir($dirPath);
    }
 }

@@ -46,9 +46,18 @@ class DrinkController extends Controller
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
         //validar e salvar imagem
+        $image = $_FILES['drink_image'];
 
+        //salvar drink
         if ($drink->save()) {
             FlashMessage::success('Drink registrado com sucesso!');
+
+            if ($drink->gallery()->create($image)){
+                FlashMessage::success('Imagem registrada com sucesso!');
+            } else {
+                FlashMessage::danger('Problemas ao registrar a imagem!');
+            }
+
             $this->redirectTo(route('drinks.index'));
         } else {
             FlashMessage::danger('Existem dados incorretos! Por favor verifique');
@@ -94,8 +103,13 @@ class DrinkController extends Controller
     public function destroy(Request $request): void
     {
         $params = $request->getParams();
+
+        /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+
+        //remover todas as imagens associadas aquele drink
+        $drink->gallery()->destroyAllImages();
 
         $drink->destroy();
 
