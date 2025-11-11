@@ -91,7 +91,7 @@ CREATE TABLE cart_items(
 CREATE TABLE drink_images (
   id INT AUTO_INCREMENT PRIMARY KEY,
   drink_id INT NOT NULL,
-  path VARCHAR(255),
+  image_name VARCHAR(255),
   FOREIGN KEY (drink_id) REFERENCES drinks(id) ON DELETE CASCADE
 );
 

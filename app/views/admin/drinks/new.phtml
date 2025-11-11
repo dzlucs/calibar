@@ -1,6 +1,6 @@
 <div class="div-form">
     <h1>Adicionar novo drink</h1>
-    <form action="<?= route('drinks.create') ?>" method="POST" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+    <form action="<?= route('drinks.create') ?>" method="POST" enctype="multipart/form-data" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate>
         <div class="mb-3">
             <label for="drink_name" class="form-label">Nome do drink</label>
             <input type="text" value="<?= $drink->name ?>" name="drink[name]" id="drink_name" class="form-control" required>
@@ -9,7 +9,11 @@
         <div class="mb-3">
             <label for="drink_price" class="form-label">Preço</label>
             <input type="text" value="<?= $drink->price ?>" name="drink[price]" id="drink_price" class="form-control" required>
-            <div class="invalid-feedback"><?= $drink->errors('price') ? 'O campo preço não pode estar vazio!' : '' ?>
+            <div class="invalid-feedback"><?= $drink->errors('price') ? 'O campo preço não pode estar vazio!' : '' ?></div>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Imagem</label>
+            <input type="file" name="drink_image" id="image_preview_input" class="form-control">
         </div>
         <div class="submit-btn">
             <button type="submit" class="btn btn-primary btn-add mb-3">Adicionar</button>

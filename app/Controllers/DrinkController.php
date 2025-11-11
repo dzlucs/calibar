@@ -45,6 +45,8 @@ class DrinkController extends Controller
         $drink = $this->current_user->admin()->drinks()->new($params['drink']);
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
+        //validar e salvar imagem
+
         if ($drink->save()) {
             FlashMessage::success('Drink registrado com sucesso!');
             $this->redirectTo(route('drinks.index'));

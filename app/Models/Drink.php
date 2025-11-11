@@ -6,6 +6,7 @@ use Core\Database\ActiveRecord\BelongsTo;
 use Core\Database\ActiveRecord\HasMany;
 use Core\Database\ActiveRecord\Model;
 use Lib\Validations;
+use App\Services\DrinkGallery;
 
 /**
  * @property int $id
@@ -45,7 +46,7 @@ class Drink extends Model
     //VERIFICAR NECESSIDADE DO MÉTODO
     public function adminExists(): bool
     {
-        if (Admin::exists(['admin_id' => $this->admin_id])) {
+        if (Admin::exists(['id' => $this->admin_id])) {
             return true;
         }
 
@@ -66,5 +67,10 @@ class Drink extends Model
     public function getErrors(): array
     {
         return $this->errors;
+    }
+
+    public function gallery(): DrinkGallery
+    {
+        return new DrinkGallery($this, ['extension' => ['png', 'jpg', 'jpeg'], 'size' => 2 * 1024 * 1024]);
     }
 }
