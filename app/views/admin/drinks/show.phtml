@@ -1,6 +1,23 @@
+<div class="div-form">
+  <h1>Nova imagem</h1>
+  <form action="<?= route('drinks.image.create', ['drink_id' => $drink->id]) ?>" method="POST" enctype="multipart/form-data" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+    <div class="mb-1">
+      <label for="formFile" class="form-label">Imagem</label>
+      <input type="file" name="drink_image" id="image_preview_input" class="form-control">
+      <input type="hidden" name="drink_id" value="<?= $drink->id ?>">
+    </div>
+    <div class="submit-btn">
+      <button type="submit" class="btn btn-primary btn-add mb-3">Adicionar</button>
+    </div>
+  </form>
+</div>
+
 <div class="drink-container">
     <div class="d-flex justify-content-between align-items-center">
-        <h1><?= $drink->name ?></h1>
+        <div class="d-flex flex-column">
+          <h1><?= $drink->name ?></h1>
+          <h5><?php echo "R$" . "{$drink->price}"; ?></h5>
+        </div>
         <div class="d-flex align-items-center">
             <a href="<?= route('drinks.edit', ['drink_id' => $drink->id]) ?>" id="pencil-icon"><i class="bi bi-pencil-square text-secondary-custom fs-2 me-3"></i></a>
             <button type="button" id="trash-icon" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
@@ -10,18 +27,28 @@
         </div>
     </div>
     
-    <div class="row">
-      <div class="col-12 col-sm-6 col-md-4 col-lg-4 g-4 mb-2">
+<div class="row">
+    <?php foreach ($drink->images()->get() as $image): ?>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
             <div class="card">
-                <img src="/assets/images/defaults/drink-1.jpeg" class="card-img-top" alt="card-image">
-                <div class="card-body">
-                    <h5 class="card-title"><?php echo "{$drink->name}"; ?></h5>
-                    <h5 class="card-title"><?php echo "R$" . "{$drink->price}"; ?></h5>
-                </div>
+                <img 
+                    src="<?= $drink->gallery()->path($image->image_name) ?>" 
+                    class="card-img-top" 
+                    alt="Imagem do drink <?php echo htmlspecialchars($drink->name); ?>"
+                >
             </div>
         </div>
+    <?php endforeach; ?>
 
-    </div>
+    <?php if (empty($drink->images()->get())): ?>
+        <!-- caso não haja imagens, exibir a imagem padrão -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 g-4 mb-2">
+            <div class="card">
+                <img src="/assets/images/defaults/drink-1.jpeg" class="card-img-top" alt="Imagem padrão do drink">
+            </div>
+        </div>
+    <?php endif; ?>
+</div>
 
 <!-- Modal de Confirmação da Exclusão -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">

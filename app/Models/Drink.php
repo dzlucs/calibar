@@ -73,4 +73,10 @@ class Drink extends Model
     {
         return new DrinkGallery($this, ['extension' => ['png', 'jpg', 'jpeg'], 'size' => 2 * 1024 * 1024]);
     }
+
+/*     public function save() {
+        
+        super::save();
+        $this->gallery()->create($image)
+    } */
 }

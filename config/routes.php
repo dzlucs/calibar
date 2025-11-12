@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
         //CREATE
         Route::get('/admin/drinks/new', [DrinkController::class, 'new'])->name('drinks.new');//ok
         Route::post('/admin/drinks', [DrinkController::class, 'create'])->name('drinks.create');//ok
+        Route::post('/admin/drinks/{drink_id}/images', [DrinkController::class, 'createDrinkImage'])->name('drinks.image.create');
 
         //READ
         Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index'); //ok
