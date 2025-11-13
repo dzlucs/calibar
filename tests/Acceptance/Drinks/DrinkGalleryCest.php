@@ -8,7 +8,7 @@ use App\Models\Admin;
 
 class DrinkGalleryCest extends BaseAcceptanceCest
 {
-    public function testUploadValidImage(AcceptanceTester $I)
+    public function testUploadValidImage(AcceptanceTester $I): void
     {
 
         $user = new User([
@@ -23,7 +23,7 @@ class DrinkGalleryCest extends BaseAcceptanceCest
         $admin->save();
 
         $I->login($user->email, '123');
-        
+
         $I->amOnPage('/admin/drinks');
         $I->click('Adicionar drink');
         $I->fillField('#drink_name', 'Drink 1');
@@ -34,7 +34,7 @@ class DrinkGalleryCest extends BaseAcceptanceCest
         $I->seeElement('img[src*="avatar_test"]');
     }
 
-    public function testRemoveImage(AcceptanceTester $I)
+    public function testRemoveImage(AcceptanceTester $I): void
     {
 
         $user = new User([

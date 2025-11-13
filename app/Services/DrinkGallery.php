@@ -119,7 +119,7 @@ class DrinkGallery
         return $this->image['tmp_name'];
     }
 
-    private function isValidImage(): bool
+    public function isValidImage(): bool
     {
         if (isset($this->validations['extension'])) {
             $this->validateImageExtension();
