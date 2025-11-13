@@ -6,22 +6,30 @@ use Core\Database\ActiveRecord\BelongsTo;
 use Core\Database\ActiveRecord\HasMany;
 use Core\Database\ActiveRecord\Model;
 use Lib\Validations;
+use App\Services\DrinkGallery;
 
 /**
  * @property int $id
  * @property string $name
- * @property int #admin_id
- * 
+ * @property string $price
+ * @property int $admin_id
+ * @property \App\Models\DrinkImage[] $images
+ *
  */
 
-Class Drink extends Model
+class Drink extends Model
 {
     protected static string $table = 'drinks';
     protected static array $columns = [
         'name',
-        'admin_id',
         'price',
+        'admin_id',
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(DrinkImage::class, 'drink_id');
+    }
 
     public function admin(): BelongsTo
     {
@@ -31,13 +39,14 @@ Class Drink extends Model
     public function validates(): void
     {
         Validations::notEmpty('name', $this);
+        Validations::notEmpty('price', $this);
         $this->adminExists();
     }
 
     //VERIFICAR NECESSIDADE DO MÉTODO
     public function adminExists(): bool
     {
-        if (Admin::exists(['id' => $this->admin_id])) { //if(Admin::exists($this->admin_id)){
+        if (Admin::exists(['id' => $this->admin_id])) {
             return true;
         }
 
@@ -46,10 +55,10 @@ Class Drink extends Model
     }
 
     //VERIFICAR MÉTODOS COM COMENTÁRIO NA PR**
-    public function addError(string $attribute, string $message): void
+/*     public function addError(string $attribute, string $message): void
     {
         $this->errors[$attribute] = "{$attribute} {$message}";
-    }
+    } */
 
     /**
     *@return string[] List of error messages, each as a string.
@@ -59,4 +68,15 @@ Class Drink extends Model
     {
         return $this->errors;
     }
+
+    public function gallery(): DrinkGallery
+    {
+        return new DrinkGallery($this, ['extension' => ['png', 'jpg', 'jpeg'], 'size' => 2 * 1024 * 1024]);
+    }
+
+/*     public function save() {
+        
+        super::save();
+        $this->gallery()->create($image)
+    } */
 }

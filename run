@@ -70,7 +70,7 @@ function phpstan {
 }
 
 function git:clean:branchs {
-    git branch | grep -v '\*\|master\|main\|develop\|production' | xargs -n 1 git branch -D
+   git branch | grep -v '\*\|master\|main\|develop\|production' | xargs -n 1 git branch -D
 }
 
 function db:console {

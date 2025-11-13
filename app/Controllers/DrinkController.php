@@ -3,29 +3,31 @@
 namespace App\Controllers;
 
 use App\Models\Drink;
-use Lib\FlashMessage;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
+use Lib\FlashMessage;
 
 class DrinkController extends Controller
 {
     public function index(Request $request): void
     {
+        $paginator = Drink::paginate(page: $request->getParam('page', 1));
+        $drinks = $paginator->registers();
+
         //$drinks = $this->current_user->admin()->drinks()->get();
-        $drinks = Drink::all();
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
-        $this->render('admin/drinks/index', compact('drinks', 'imagePath'), 'dashboard');
+        $this->render('admin/drinks/index', compact('drinks', 'imagePath', 'paginator'), 'dashboard');
     }
 
     //MÉTODO PARA MOSTRAR UM DRINK EM ESPECÍFICO
     public function show(Request $request): void
     {
         $params = $request->getParams();
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
-        //pegue o usuário atual, busque o id de admin dele, busque todos os drinks associados a esse admin e busque pelo drink específico via id
         /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
-        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+
         $this->render('admin/drinks/show', compact('drink', 'imagePath'));
     }
 
@@ -34,51 +36,66 @@ class DrinkController extends Controller
         //criando uma nova instância de um drink
         $drink = $this->current_user->admin()->drinks()->new();
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
-        $this->render('admin/drinks/new', compact('drink',  'imagePath'));
+        $this->render('admin/drinks/new', compact('drink', 'imagePath'));
     }
 
     public function create(Request $request): void
     {
         $params = $request->getParams();
+        /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->new($params['drink']);
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
-        $drink->admin_id = $this->current_user->admin()->id;        
+        $image = $_FILES['drink_image'];
 
+        //salvar drink
         if ($drink->save()) {
-            FlashMessage::success('Drink registrado com sucesso');
+            FlashMessage::success('Drink registrado com sucesso!');
+
+            if ($drink->gallery()->create($image)) {
+                FlashMessage::success('Imagem registrada com sucesso!');
+            } else {
+                FlashMessage::danger('Problemas ao registrar a imagem!');
+            }
+
             $this->redirectTo(route('drinks.index'));
         } else {
-            FlashMessage::danger('Dados incorretos. Verifique.');
-            $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+            FlashMessage::danger('Existem dados incorretos! Por favor verifique');
             $this->render('admin/drinks/new', compact('drink', 'imagePath'));
         }
     }
 
-    public function edit(Request $request):void
+    public function edit(Request $request): void
     {
         $params = $request->getParams();
-        $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
+
         $this->render('admin/drinks/edit', compact('drink', 'imagePath'));
     }
 
     public function update(Request $request): void
     {
-        $id = $request->getParam('drink_id');
-        $params = $request->getParam('drink');
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
-        /**  @var \App\Models\Drink $drink */
+        $params = $request->getParams();
+        $drinkParams = $params['drink'];
+
+        $id = $params['drink_id'];
+
+/*         var_dump($params);
+        die(); */
+
+        /** @var \App\Models\Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($id);
-        $drink->name = $params['name'];
-        $drink->price = $params['price'];
+        $drink->name = $drinkParams['name'];
+        $drink->price = $drinkParams['price'];
 
         if ($drink->save()) {
             FlashMessage::success('Drink editado com sucesso!');
-            // $this->redirectTo('admin/drinks/' . $drink->id);
-            $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
+            $this->redirectTo('/admin/drinks/' . $drink->id);
         } else {
-            FlashMessage::danger('Dados incorretos. Verifique');
-            $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+            FlashMessage::danger('Existem dados incorretos. Por favor, verifique.');
             $this->render('admin/drinks/edit', compact('drink', 'imagePath'));
         }
     }
@@ -87,11 +104,41 @@ class DrinkController extends Controller
     {
         $params = $request->getParams();
 
+        /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+
+        //remover todas as imagens associadas aquele drink
+        $drink->gallery()->destroyAllImages();
+
         $drink->destroy();
 
-        FlashMessage::success('Drink removido com sucesso');
+        FlashMessage::success('Drink removido com sucesso!');
         $this->redirectTo(route('drinks.index'));
     }
 
+    public function uploadNewDrinkImage(): void {
+        
+    }
+
+
+    public function createDrinkImage(Request $request): void
+    {
+        //$imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $params = $request->getParams();
+        
+        $drinkId = $_POST['drink_id'];
+        $image = $_FILES['drink_image'];
+
+        /** @var Drink $drink */
+        $drink = Drink::findById($drinkId);
+
+        if ($drink->gallery()->create($image)) {
+                FlashMessage::success('Imagem registrada com sucesso!');
+            } else {
+                FlashMessage::danger('Problemas ao registrar a imagem!');
+        }
+
+        $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
+    }
 }

@@ -4,6 +4,7 @@ namespace Tests\Unit\Models;
 
 use App\Models\Admin;
 use App\Models\Drink;
+use App\Models\DrinkImage;
 use App\Models\User;
 use Tests\TestCase;
 
@@ -151,6 +152,25 @@ class DrinkTest extends TestCase
 
         $this->assertInstanceOf(Admin::class, $admin);
         $this->assertEquals($this->admin->id, $admin->id);
+    }
+
+    public function test_cascade_delete_removes_images()
+    {
+        $drink = Drink::create(['name' => 'Teste Cascade', 'price' => '20']);
+
+        $image = DrinkImage::create([
+            'drink_id' => $drink->id,
+            'image_name' => 'foto.jpg'
+        ]);
+
+        // pra imagem ser deletada -> ela precisa existir, isso garante que ela exista
+        $this->assertNotEmpty($drink->images()->get());
+
+        // remove
+        $drink->delete();
+
+        // testa se foram removidas
+        $this->assertEmpty(DrinkImage::where('drink_id', $drink->id)->get());
     }
 }
 

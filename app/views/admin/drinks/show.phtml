@@ -1,43 +1,53 @@
-<div class="container">
-    <div class="d-flex justify-content-between align-items-center">
-        <h1><?= $drink->name ?></h1>
-        <div class="d-flex align-items-center">
-            <a href="<?= route('drinks.edit', ['drink_id' => $drink->id]) ?>"><i class="bi bi-pencil-square text-secondary-custom fs-2 me-3"></i></a>
-            <button type="button" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                <i class="ni ni-trash3 text-danger-custom fs-2"></i>
-            </button>
-        </div>
+<div class="div-form">
+  <h1>Nova imagem</h1>
+  <form action="<?= route('drinks.image.create', ['drink_id' => $drink->id]) ?>" method="POST" enctype="multipart/form-data" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate>
+    <div class="mb-1">
+      <label for="formFile" class="form-label">Imagem</label>
+      <input type="file" name="drink_image" id="image_preview_input" class="form-control">
+      <input type="hidden" name="drink_id" value="<?= $drink->id ?>">
     </div>
+    <div class="submit-btn">
+      <button type="submit" class="btn btn-primary btn-add mb-3">Adicionar</button>
+    </div>
+  </form>
+</div>
 
-   <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Detalhes do Drink</h5>
-                    <p class="card-text">
-                        <strong>Nome:</strong> <?= htmlspecialchars($drink->name) ?>
-                    </p>
-                    <p class="card-text">
-                        <strong>Preço:</strong> R$ <?= number_format($drink->price, 2, ',', '.') ?>
-                    </p>
-                    <p class="card-text">
-                        <strong>ID do Admin:</strong> <?= htmlspecialchars($drink->admin_id) ?>
-                    </p>
-                </div>
-            </div>
+<div class="drink-container">
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex flex-column">
+          <h1><?= $drink->name ?></h1>
+          <h5><?php echo "R$" . "{$drink->price}"; ?></h5>
         </div>
-        <div class="col-md-6">
-            <!-- Aqui pode entrar uma galeria de fotos do drink no futuro -->
-            <div class="card">
-                <div class="card-body text-center" style="height: 150px; display: grid; place-items: center;">
-                    <div>
-                        <i class="bi bi-image" style="font-size: 3rem; color: #ccc;"></i>
-                        <p class="text-muted">Galeria (em breve)</p>
-                    </div>
-                </div>
-            </div>
+        <div class="d-flex align-items-center">
+            <a href="<?= route('drinks.edit', ['drink_id' => $drink->id]) ?>" id="pencil-icon"><i class="bi bi-pencil-square text-secondary-custom fs-2 me-3"></i></a>
+            <button type="button" id="trash-icon" class="btn btn-link" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                <i class="bi bi-trash3 text-danger-custom fs-2 me-3"></i>
+            </button>
+            <a href="<?= route('drinks.new', ['drink_id' => $drink->id]) ?>"><i class="bi bi-plus-circle fs-2 me-3"></i></a>
         </div>
     </div>
+    
+<div class="row">
+    <?php foreach ($drink->images()->get() as $image): ?>
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
+            <div class="card">
+                <img 
+                    src="<?= $drink->gallery()->path($image->image_name) ?>" 
+                    class="card-img-top" 
+                    alt="Imagem do drink <?php echo htmlspecialchars($drink->name); ?>"
+                >
+            </div>
+        </div>
+    <?php endforeach; ?>
+
+    <?php if (empty($drink->images()->get())): ?>
+        <!-- caso não haja imagens, exibir a imagem padrão -->
+        <div class="col-12 col-sm-6 col-md-4 col-lg-4 g-4 mb-2">
+            <div class="card">
+                <img src="/assets/images/defaults/drink-1.jpeg" class="card-img-top" alt="Imagem padrão do drink">
+            </div>
+        </div>
+    <?php endif; ?>
 </div>
 
 <!-- Modal de Confirmação da Exclusão -->
@@ -49,17 +59,16 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <p>Você tem certeza de que deseja excluir este drink? Esta ação não pode ser desfeita.</p>
+        <h6>Você tem certeza de que deseja excluir esse drink? Esta ação não poderá ser desfeita</h6>
         <p class="text-danger-custom">Todos os dados vinculados ao drink serão excluídos!</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <form action="<?= route('drinks.destroy', ['drink_id' => $drink->id,]) ?>" method="POST" id="deleteDrinkForm">
           <input type="hidden" name="_method" value="DELETE">
-          <button type="submit" class="btn btn-danger">Deletar</button>
+          <button type="submit" class="btn btn-danger" id="delete-btn-modal">Excluir</button>
         </form>
       </div>
     </div>
   </div>
-
 </div>

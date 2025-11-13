@@ -92,6 +92,7 @@ CREATE TABLE galleries (
   drink_id INT NOT NULL,
   path VARCHAR(255),
   FOREIGN KEY (drink_id) REFERENCES drinks(id)
+    ON DELETE CASCADE /* adicionando integridade referencial */
 );
 
 CREATE TABLE orders (
