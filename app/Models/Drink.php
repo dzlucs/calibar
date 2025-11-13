@@ -75,7 +75,7 @@ class Drink extends Model
     }
 
 /*     public function save() {
-        
+
         super::save();
         $this->gallery()->create($image)
     } */

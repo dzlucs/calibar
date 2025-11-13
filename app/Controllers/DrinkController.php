@@ -117,7 +117,8 @@ class DrinkController extends Controller
         $this->redirectTo(route('drinks.index'));
     }
 
-    public function destroyDrinkImage(Request $request): void {
+    public function destroyDrinkImage(Request $request): void
+    {
 
         $params = $request->getParams();
         $image_name = $params['image_name'];
@@ -125,14 +126,13 @@ class DrinkController extends Controller
 
         $drink = Drink::findById($drink_id);
 
-        if ($drink->gallery()->destroyDrinkImage($image_name, $drink_id)){
+        if ($drink->gallery()->destroyDrinkImage($image_name)) {
             FlashMessage::success('Imagem removida com sucesso!');
         } else {
             FlashMessage::danger('Problemas ao remover a imagem!');
         }
 
         $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
-
     }
 
 
@@ -140,7 +140,7 @@ class DrinkController extends Controller
     {
         //$imagePath = '/assets/images/defaults/boy-profile.jpeg';
         $params = $request->getParams();
-        
+
         $drinkId = $_POST['drink_id'];
         $image = $_FILES['drink_image'];
 
@@ -149,11 +149,10 @@ class DrinkController extends Controller
 
         if ($drink->gallery()->create($image)) {
                 FlashMessage::success('Imagem registrada com sucesso!');
-            } else {
-                FlashMessage::danger('Problemas ao registrar a imagem!');
+        } else {
+            FlashMessage::danger('Problemas ao registrar a imagem!');
         }
 
         $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
     }
 }
-

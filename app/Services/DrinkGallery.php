@@ -11,20 +11,23 @@ use RuntimeException;
 class DrinkGallery
 {
    /**
-    * @var array<string, mixed> $image
     * @var string $savedFileName
     */
+    private ?string $savedFileName = null;
 
-   private ?string $savedFileName = null;
-   private array $image = [];
+    /**
+     * @var array<string, mixed> $image
+     */
+    private array $image = [];
 
     public function __construct(
         private Drink $model,
-        /** @var array<string, string|array<string>> $validations */
+        /** @var array<string, string|int|array<string>> $validations */
         private array $validations = []
     ) {
     }
 
+    /** @param array<string, mixed> $image */
     public function create(array $image): bool
     {
         $this->image = $image;
@@ -65,7 +68,7 @@ class DrinkGallery
        //criando o registro da imagem no banco e retornando o status
         return $newImage->save();
     }
-   
+
     public function path(string $img): string
     {
         return $this->baseDir() . $img;
@@ -149,9 +152,11 @@ class DrinkGallery
 
     public function firstSavedImagePath(): string
     {
+
         $images = $this->model->images()->get();
 
         if (!empty($images)) {
+            /** @var \App\Models\DrinkImage $first */
             $first = $images[0];
             return $this->baseDir() . $first->image_name;
         }
@@ -166,6 +171,7 @@ class DrinkGallery
         $dirPath = $this->storeDir();
 
         foreach ($images as $image) {
+            /** @var \App\Models\DrinkImage $image */
             $path = $dirPath . $image->image_name;
 
             if (file_exists($path)) {
@@ -205,11 +211,11 @@ class DrinkGallery
 
 
         if (!$image) {
-           return false; 
+            return false;
         }
 
         $image->destroy();
-        
+
         return true;
     }
 }

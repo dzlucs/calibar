@@ -9,7 +9,7 @@ use App\Services\DrinkGallery;
 /**
  * @property int $id
  * @property int $drink_id
- * @property string $name
+ * @property string $image_name
  */
 
 class DrinkImage extends Model
