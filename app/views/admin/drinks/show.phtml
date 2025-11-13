@@ -1,4 +1,4 @@
-<div class="div-form">
+<div class="div-form new-image-form">
   <h1>Nova imagem</h1>
   <form action="<?= route('drinks.image.create', ['drink_id' => $drink->id]) ?>" method="POST" enctype="multipart/form-data" class="<?= $drink->hasErrors() ? 'was-validated' : '' ?>" novalidate>
     <div class="mb-1">
@@ -6,7 +6,7 @@
       <input type="file" name="drink_image" id="image_preview_input" class="form-control">
       <input type="hidden" name="drink_id" value="<?= $drink->id ?>">
     </div>
-    <div class="submit-btn">
+    <div class="submit-btn submit-btn-img">
       <button type="submit" class="btn btn-primary btn-add mb-3">Adicionar</button>
     </div>
   </form>
@@ -30,12 +30,20 @@
 <div class="row">
     <?php foreach ($drink->images()->get() as $image): ?>
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
-            <div class="card">
+            <div class="card fixed-card">
                 <img 
                     src="<?= $drink->gallery()->path($image->image_name) ?>" 
-                    class="card-img-top" 
+                    class="card-img-top card-img"
                     alt="Imagem do drink <?php echo htmlspecialchars($drink->name); ?>"
                 >
+                <form action="<?= route('drinks.image.destroy', ['drink_id' => $drink->id])?>" method="POST" class="delete-card-form">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input type="hidden" name="image_name" value="<?= $image->image_name ?>">
+                  <input type="hidden" name="drink_id" value="<?= $drink->id ?>">
+                  <button type="submit" id="trash-icon" class="btn btn-primary delete-card">
+                    Excluir
+                  </button>
+                </form>
             </div>
         </div>
     <?php endforeach; ?>

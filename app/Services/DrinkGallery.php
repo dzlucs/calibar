@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\DrinkImage;
 use App\Models\Drink;
 use Core\Constants\Constants;
 use Core\Database\ActiveRecord\Model;
@@ -184,5 +185,31 @@ class DrinkGallery
         }
 
         rmdir($dirPath);
+    }
+
+    public function destroyDrinkImage(string $image_name): bool
+    {
+        $path = $this->absoluteBaseDir() . $image_name;
+
+
+        if (!file_exists($path)) {
+            return false;
+        }
+
+        unlink($path);
+
+        $image = DrinkImage::findBy([
+        'drink_id' => $this->model->id,
+        'image_name' => $image_name,
+        ]);
+
+
+        if (!$image) {
+           return false; 
+        }
+
+        $image->destroy();
+        
+        return true;
     }
 }

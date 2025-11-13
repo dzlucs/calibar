@@ -117,8 +117,22 @@ class DrinkController extends Controller
         $this->redirectTo(route('drinks.index'));
     }
 
-    public function uploadNewDrinkImage(): void {
-        
+    public function destroyDrinkImage(Request $request): void {
+
+        $params = $request->getParams();
+        $image_name = $params['image_name'];
+        $drink_id = $params['drink_id'];
+
+        $drink = Drink::findById($drink_id);
+
+        if ($drink->gallery()->destroyDrinkImage($image_name, $drink_id)){
+            FlashMessage::success('Imagem removida com sucesso!');
+        } else {
+            FlashMessage::danger('Problemas ao remover a imagem!');
+        }
+
+        $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
+
     }
 
 
