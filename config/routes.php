@@ -28,7 +28,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/admin/drinks/new', [DrinkController::class, 'new'])->name('drinks.new');//ok
         Route::post('/admin/drinks', [DrinkController::class, 'create'])->name('drinks.create');//ok
         Route::post(
-            '/admin/drinks/{drink_id}/images', [DrinkController::class, 'createDrinkImage'])->name('drinks.image.create');
+            '/admin/drinks/{drink_id}/images',
+            [DrinkController::class, 'createDrinkImage']
+        )->name('drinks.image.create');
 
         //READ
         Route::get('/admin/drinks', [DrinkController::class, 'index'])->name('drinks.index'); //ok
@@ -42,7 +44,9 @@ Route::middleware('auth')->group(function () {
         //DELETE
         Route::delete('/admin/drinks/{drink_id}', [DrinkController::class, 'destroy'])->name('drinks.destroy');//ok
         Route::delete(
-            '/admin/drinks/{drink_id}/images', [DrinkController::class, 'destroyDrinkImage'])->name('drinks.image.destroy');// delete de uma imagem
+            '/admin/drinks/{drink_id}/images',
+            [DrinkController::class, 'destroyDrinkImage']
+        )->name('drinks.image.destroy');// delete de uma imagem
     });
 
     Route::middleware('customer')->group(function () {
