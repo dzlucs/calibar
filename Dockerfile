@@ -5,3 +5,7 @@ RUN docker-php-ext-enable pdo_mysql
 
 RUN apt-get update -y && apt-get install -y libzip-dev zip
 RUN docker-php-ext-install zip
+
+RUN mkdir -p /var/www/public/uploads \
+    && chown -R www-data:www-data /var/www/public \
+    && chmod -R 775 /var/www/public

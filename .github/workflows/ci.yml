@@ -54,6 +54,11 @@ jobs:
       - name: Up containers
         run: ./run up -d
 
+      - name: Fix writable directories inside container
+        run: |
+          docker compose exec php_test mkdir -p /var/www/public/assets/uploads/drinks
+          docker compose exec php_test chmod -R 777 /var/www/public/assets/uploads
+
       - name: See containers
         run: ./run ps
 

@@ -42,11 +42,22 @@ class DrinkController extends Controller
     public function create(Request $request): void
     {
         $params = $request->getParams();
+        /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->new($params['drink']);
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
+        $image = $_FILES['drink_image'];
+
+        //salvar drink
         if ($drink->save()) {
             FlashMessage::success('Drink registrado com sucesso!');
+
+            if ($drink->gallery()->create($image)) {
+                FlashMessage::success('Imagem registrada com sucesso!');
+            } else {
+                FlashMessage::danger('Problemas ao registrar a imagem!');
+            }
+
             $this->redirectTo(route('drinks.index'));
         } else {
             FlashMessage::danger('Existem dados incorretos! Por favor verifique');
@@ -92,12 +103,56 @@ class DrinkController extends Controller
     public function destroy(Request $request): void
     {
         $params = $request->getParams();
+
+        /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
         $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+
+        //remover todas as imagens associadas aquele drink
+        $drink->gallery()->destroyAllImages();
 
         $drink->destroy();
 
         FlashMessage::success('Drink removido com sucesso!');
         $this->redirectTo(route('drinks.index'));
+    }
+
+    public function destroyDrinkImage(Request $request): void
+    {
+
+        $params = $request->getParams();
+        $image_name = $params['image_name'];
+        $drink_id = $params['drink_id'];
+
+        $drink = Drink::findById($drink_id);
+
+        if ($drink->gallery()->destroyDrinkImage($image_name)) {
+            FlashMessage::success('Imagem removida com sucesso!');
+        } else {
+            FlashMessage::danger('Problemas ao remover a imagem!');
+        }
+
+        $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
+    }
+
+
+    public function createDrinkImage(Request $request): void
+    {
+        //$imagePath = '/assets/images/defaults/boy-profile.jpeg';
+        $params = $request->getParams();
+
+        $drinkId = $_POST['drink_id'];
+        $image = $_FILES['drink_image'];
+
+        /** @var Drink $drink */
+        $drink = Drink::findById($drinkId);
+
+        if ($drink->gallery()->create($image)) {
+                FlashMessage::success('Imagem registrada com sucesso!');
+        } else {
+            FlashMessage::danger('Problemas ao registrar a imagem!');
+        }
+
+        $this->redirectTo(route('drinks.show', ['drink_id' => $drink->id]));
     }
 }

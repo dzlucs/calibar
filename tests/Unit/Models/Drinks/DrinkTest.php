@@ -76,6 +76,7 @@ class DrinkTest extends TestCase
 
     public function test_should_return_error_if_name_is_empty(): void
     {
+        /** @var \App\Models\Drink $drink2 */
         $drink2 = $this->admin->drinks()->new([
             'name' => 'drink test 2',
             'price' => '39.90',

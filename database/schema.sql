@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS customers;
 DROP TABLE IF EXISTS order_items;
 DROP TABLE IF EXISTS orders;
-DROP TABLE IF EXISTS galleries;
+DROP TABLE IF EXISTS drink_images;
 DROP TABLE IF EXISTS cart_items;
 DROP TABLE IF EXISTS carts;
 DROP TABLE IF EXISTS addresses;
@@ -87,11 +87,12 @@ CREATE TABLE cart_items(
   FOREIGN KEY (drink_id) REFERENCES drinks(id)
 );
 
-CREATE TABLE galleries (
+/*image_name ao invés de path*/
+CREATE TABLE drink_images (
   id INT AUTO_INCREMENT PRIMARY KEY,
   drink_id INT NOT NULL,
-  path VARCHAR(255),
-  FOREIGN KEY (drink_id) REFERENCES drinks(id)
+  image_name VARCHAR(255),
+  FOREIGN KEY (drink_id) REFERENCES drinks(id) ON DELETE CASCADE
 );
 
 CREATE TABLE orders (

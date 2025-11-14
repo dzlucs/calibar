@@ -6,12 +6,14 @@ use Core\Database\ActiveRecord\BelongsTo;
 use Core\Database\ActiveRecord\HasMany;
 use Core\Database\ActiveRecord\Model;
 use Lib\Validations;
+use App\Services\DrinkGallery;
 
 /**
  * @property int $id
  * @property string $name
  * @property string $price
  * @property int $admin_id
+ * @property \App\Models\DrinkImage[] $images
  *
  */
 
@@ -21,8 +23,13 @@ class Drink extends Model
     protected static array $columns = [
         'name',
         'price',
-        'admin_id'
+        'admin_id',
     ];
+
+    public function images(): HasMany
+    {
+        return $this->hasMany(DrinkImage::class, 'drink_id');
+    }
 
     public function admin(): BelongsTo
     {
@@ -39,7 +46,7 @@ class Drink extends Model
     //VERIFICAR NECESSIDADE DO MÉTODO
     public function adminExists(): bool
     {
-        if (Admin::exists(['admin_id', $this->admin_id])) {
+        if (Admin::exists(['id' => $this->admin_id])) {
             return true;
         }
 
@@ -61,4 +68,15 @@ class Drink extends Model
     {
         return $this->errors;
     }
+
+    public function gallery(): DrinkGallery
+    {
+        return new DrinkGallery($this, ['extension' => ['png', 'jpg', 'jpeg'], 'size' => 2 * 1024 * 1024]);
+    }
+
+/*     public function save() {
+
+        super::save();
+        $this->gallery()->create($image)
+    } */
 }

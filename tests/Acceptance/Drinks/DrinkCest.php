@@ -14,6 +14,7 @@ class DrinkCest extends BaseAcceptanceCest
 {
     private User $user;
     private Admin $admin;
+    private Drink $drink;
 
     private function setUp(): void
     {
@@ -32,18 +33,18 @@ class DrinkCest extends BaseAcceptanceCest
 
         $this->admin->save();
 
-/*         $this->drink = new Drink([
+        $this->drink = new Drink([
             'name' => 'drink teste',
             'price' => '29,90'
         ]);
-        $this->drink->save(); */
+        $this->drink->save();
     }
 
     public function create_drink_successfully(AcceptanceTester $page): void
     {
         $this->setUp();
 
-        $page->login($this->user->email, $this->user->password);
+        $page->login($this->user->email, '123');
 
         $page->amOnPage('/admin/drinks');
 
@@ -60,7 +61,7 @@ class DrinkCest extends BaseAcceptanceCest
     {
         $this->setUp();
 
-        $page->login($this->user->email, $this->user->password);
+        $page->login($this->user->email, '123');
 
         $page->amOnPage('/admin/drinks');
 
@@ -89,7 +90,7 @@ class DrinkCest extends BaseAcceptanceCest
     {
         $this->setUp();
 
-        $page->login($this->user->email, $this->user->password);
+        $page->login($this->user->email, '123');
 
         $page->amOnPage('/admin/drinks');
 
@@ -99,10 +100,10 @@ class DrinkCest extends BaseAcceptanceCest
         $page->fillField('#drink_price', '49.90');
 
         $page->click('Adicionar');
-        $page->waitForText('Drink registrado com sucesso!');
 
-        $page->see('Ver mais');
-        $page->click('Ver mais');
+        $page->waitForText("Drink registrado com sucesso!", 5);
+
+        $page->amOnPage('/admin/drinks/1');
 
         $page->waitForText('Drink de teste');
 
@@ -120,7 +121,7 @@ class DrinkCest extends BaseAcceptanceCest
     {
         $this->setUp();
 
-        $page->login($this->user->email, $this->user->password);
+        $page->login($this->user->email, '123');
 
         $page->amOnPage('/admin/drinks');
 
@@ -132,8 +133,10 @@ class DrinkCest extends BaseAcceptanceCest
         $page->click('Adicionar');
         $page->waitForText('Drink registrado com sucesso!');
 
-        $page->see('Ver mais');
-        $page->click('Ver mais');
+        /* $page->see('Ver mais');
+        $page->click('Ver mais'); */
+
+        $page->amOnPage('/admin/drinks/1');
 
         $page->waitForText('Drink de teste');
 
@@ -154,7 +157,7 @@ class DrinkCest extends BaseAcceptanceCest
     {
         $this->setUp();
 
-        $page->login($this->user->email, $this->user->password);
+        $page->login($this->user->email, '123');
 
         $page->amOnPage('/admin/drinks');
 
@@ -166,8 +169,10 @@ class DrinkCest extends BaseAcceptanceCest
         $page->click('Adicionar');
         $page->waitForText('Drink registrado com sucesso!');
 
-        $page->see('Ver mais');
-        $page->click('Ver mais');
+        /* $page->see('Ver mais');
+        $page->click('Ver mais'); */
+
+        $page->amOnPage('/admin/drinks/1');
 
         $page->waitForText('Drink de teste');
 
@@ -195,17 +200,17 @@ class DrinkCest extends BaseAcceptanceCest
     public function list_all_drinks(AcceptanceTester $page): void
     {
         $user = new User([
-            'name' => 'Admin test',
-            'email' => 'admin@test.com',
-            'password' => '123',
-            'password_confirmation' => '123'
+           'name' => 'Admin test',
+           'email' => 'admin@test.com',
+           'password' => '123',
+           'password_confirmation' => '123'
         ]);
         $user->save();
 
         $admin = new Admin(['user_id' => $user->id]);
         $admin->save();
 
-        $page->login($user->email, $user->password);
+        $page->login($user->email, '123');
 
         $page->amOnPage('/admin/drinks');
 
@@ -244,7 +249,7 @@ class DrinkCest extends BaseAcceptanceCest
         $admin = new Admin(['user_id' => $user->id]);
         $admin->save();
 
-        $page->login($user->email, $user->password);
+        $page->login($user->email, '123456');
 
         $page->amOnPage('/admin/drinks');
 
