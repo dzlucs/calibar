@@ -1,10 +1,11 @@
 <?php
 
-namespace Tests\Acceptance;
+namespace Tests\Acceptance\Drinks;
 
 use Tests\Support\AcceptanceTester;
 use App\Models\User;
 use App\Models\Admin;
+use Tests\Acceptance\BaseAcceptanceCest;
 
 class DrinkGalleryCest extends BaseAcceptanceCest
 {
