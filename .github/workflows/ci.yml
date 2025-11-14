@@ -56,8 +56,8 @@ jobs:
 
       - name: Fix writable directories inside container
         run: |
-          ./run exec app mkdir -p /var/www/public/assets/uploads/drinks
-          ./run exec app chmod -R 777 /var/www/public/assets/uploads
+          docker compose exec php_test mkdir -p /var/www/public/assets/uploads/drinks
+          docker compose exec php_test chmod -R 777 /var/www/public/assets/uploads
 
       - name: See containers
         run: ./run ps
