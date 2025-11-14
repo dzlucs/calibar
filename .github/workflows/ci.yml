@@ -54,10 +54,10 @@ jobs:
       - name: Up containers
         run: ./run up -d
 
-      - - name: Fix writable directories inside container
-          run: |
-              ./run exec app mkdir -p /var/www/public/assets/uploads/drinks
-              ./run exec app chmod -R 777 /var/www/public/assets/uploads
+      - name: Fix writable directories inside container
+        run: |
+          ./run exec app mkdir -p /var/www/public/assets/uploads/drinks
+          ./run exec app chmod -R 777 /var/www/public/assets/uploads
 
       - name: See containers
         run: ./run ps
