@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\Drink;
+use App\Models\DrinkImage;
 use Core\Http\Controllers\Controller;
 use Core\Http\Request;
 use Lib\FlashMessage;
@@ -41,28 +42,38 @@ class DrinkController extends Controller
 
     public function create(Request $request): void
     {
+        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
+
         $params = $request->getParams();
+
         /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->new($params['drink']);
-        $imagePath = '/assets/images/defaults/boy-profile.jpeg';
 
         $image = $_FILES['drink_image'];
 
-        //salvar drink
-        if ($drink->save()) {
+        if ($drink->save()){
+
             FlashMessage::success('Drink registrado com sucesso!');
 
-            if ($drink->gallery()->create($image)) {
+            $drinkImage = new DrinkImage([
+                'drink_id' => $drink->id,
+                'image_name' => null
+            ]);
+
+            if($drinkImage->gallery()->create($image)){
                 FlashMessage::success('Imagem registrada com sucesso!');
             } else {
                 FlashMessage::danger('Problemas ao registrar a imagem!');
             }
 
             $this->redirectTo(route('drinks.index'));
+
         } else {
             FlashMessage::danger('Existem dados incorretos! Por favor verifique');
+
             $this->render('admin/drinks/new', compact('drink', 'imagePath'));
         }
+
     }
 
     public function edit(Request $request): void

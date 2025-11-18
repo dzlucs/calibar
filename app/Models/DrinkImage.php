@@ -25,8 +25,8 @@ class DrinkImage extends Model
         return $this->belongsTo(Drink::class, 'drink_id');
     }
 
-/*     public function gallery(): DrinkGallery
+    public function gallery(): DrinkGallery
     {
         return new DrinkGallery($this, ['extension' => ['png', 'jpg', 'jpeg'], 'size' => 2 * 1024 * 1024]);
-    } */
+    }
 }

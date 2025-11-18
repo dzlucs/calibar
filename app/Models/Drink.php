@@ -69,14 +69,27 @@ class Drink extends Model
         return $this->errors;
     }
 
-    public function gallery(): DrinkGallery
+/*     public function gallery(): DrinkGallery
     {
         return new DrinkGallery($this, ['extension' => ['png', 'jpg', 'jpeg'], 'size' => 2 * 1024 * 1024]);
-    }
+    } */
 
 /*     public function save() {
 
         super::save();
         $this->gallery()->create($image)
     } */
+
+
+    public function firstSavedImagePath(): string
+    {
+        /** @var \App\Models\DrinkImage $images */
+        $images = $this->images()->get();
+
+        if (!empty($images)) {
+            return $images[0]->gallery()->path();
+        }
+
+        return "/assets/images/defaults/drink-1.jpeg";
+    }
 }

@@ -21,7 +21,7 @@ class DrinkGallery
     private array $image = [];
 
     public function __construct(
-        private Drink $model,
+        private DrinkImage $model,
         /** @var array<string, string|int|array<string>> $validations */
         private array $validations = []
     ) {
@@ -60,24 +60,28 @@ class DrinkGallery
         }
 
        //criando uma nova instância da imagem
-        $newImage = $this->model->images()->new([
+        /* $newImage = new DrinkImage([
          'drink_id'   => $this->model->id,
          'image_name' => $this->savedFileName
-        ]);
+        ]); */
+
+        //ao invés de criar, apenas atualizo o DrinkImage já criado lá no controller
+        $this->model->image_name = $this->savedFileName;
+
 
        //criando o registro da imagem no banco e retornando o status
-        return $newImage->save();
+        return $this->model->save();
     }
 
-    public function path(string $img): string
+    public function path(): string
     {
-        return $this->baseDir() . $img;
+        return $this->baseDir() . $this->model->image_name;
     }
 
    //monta o caminho relativo
     public function baseDir(): string
     {
-        return "/assets/uploads/{$this->model::table()}/{$this->model->id}/";
+        return "/assets/uploads/drinks/{$this->model->drink_id}/";
     }
 
     public function absoluteBaseDir(): string
@@ -150,52 +154,9 @@ class DrinkGallery
         }
     }
 
-    public function firstSavedImagePath(): string
+    public function destroyDrinkImage(): bool
     {
-
-        $images = $this->model->images()->get();
-
-        if (!empty($images)) {
-            /** @var \App\Models\DrinkImage $first */
-            $first = $images[0];
-            return $this->baseDir() . $first->image_name;
-        }
-
-        return "/assets/images/defaults/drink-1.jpeg";
-    }
-
-    public function destroyAllImages(): void
-    {
-
-        $images = $this->model->images()->get();
-        $dirPath = $this->storeDir();
-
-        foreach ($images as $image) {
-            /** @var \App\Models\DrinkImage $image */
-            $path = $dirPath . $image->image_name;
-
-            if (file_exists($path)) {
-                unlink($path);
-            }
-        }
-
-
-       // garantir que o diretório está vazio antes de remover
-        if (is_dir($dirPath)) {
-            $files = glob($dirPath . '*');
-            foreach ($files as $file) {
-                if (is_file($file)) {
-                    unlink($file);
-                }
-            }
-        }
-
-        rmdir($dirPath);
-    }
-
-    public function destroyDrinkImage(string $image_name): bool
-    {
-        $path = $this->absoluteBaseDir() . $image_name;
+        $path = $this->absoluteBaseDir() . $this->model->image_name;
 
 
         if (!file_exists($path)) {
@@ -206,7 +167,7 @@ class DrinkGallery
 
         $image = DrinkImage::findBy([
         'drink_id' => $this->model->id,
-        'image_name' => $image_name,
+        'image_name' => $this->model->image_name
         ]);
 
 
