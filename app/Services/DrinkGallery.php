@@ -158,25 +158,40 @@ class DrinkGallery
     {
         $path = $this->absoluteBaseDir() . $this->model->image_name;
 
-
         if (!file_exists($path)) {
             return false;
         }
 
         unlink($path);
 
-        $image = DrinkImage::findBy([
-        'drink_id' => $this->model->id,
-        'image_name' => $this->model->image_name
-        ]);
-
-
-        if (!$image) {
+        if (!$this->model) {
             return false;
         }
 
-        $image->destroy();
+        $this->model->destroy();
 
         return true;
+    }
+
+    public static function destroyAllDrinkImages(string $id): bool
+    {
+        $dir = (string) Constants::rootPath()->join('public' . '/assets/uploads/drinks/' . $id);
+
+        if (is_dir($dir)) {
+
+            $files = glob($dir . '/*');
+
+            foreach ($files as $file){
+                if(is_file($file)){
+                    unlink($file);
+                }  
+            }
+
+            if(count(glob($dir . '/*')) === 0){
+                rmdir($dir);
+                return true;
+            }
+        }
+        return false;
     }
 }

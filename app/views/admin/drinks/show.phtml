@@ -32,14 +32,14 @@
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 g-4 mb-2">
             <div class="card fixed-card">
                 <img 
-                    src="<?= $drink->gallery()->path($image->image_name) ?>" 
-                    class="card-img-top card-img"
-                    alt="Imagem do drink <?php echo htmlspecialchars($drink->name); ?>"
+                  src="<?= $image->gallery()->path() ?>" 
+                  class="card-img-top card-img"
+                  alt="Imagem do drink <?php echo ($drink->name); ?>"
                 >
                 <form action="<?= route('drinks.image.destroy', ['drink_id' => $drink->id])?>" method="POST" class="delete-card-form">
                   <input type="hidden" name="_method" value="DELETE">
                   <input type="hidden" name="image_name" value="<?= $image->image_name ?>">
-                  <input type="hidden" name="drink_id" value="<?= $drink->id ?>">
+                  <input type="hidden" name="id" value="<?= $image->id ?>">
                   <button type="submit" id="trash-icon" class="btn btn-primary delete-card">
                     Excluir
                   </button>
