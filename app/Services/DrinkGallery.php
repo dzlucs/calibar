@@ -164,10 +164,6 @@ class DrinkGallery
 
         unlink($path);
 
-        if (!$this->model) {
-            return false;
-        }
-
         $this->model->destroy();
 
         return true;
@@ -178,16 +174,15 @@ class DrinkGallery
         $dir = (string) Constants::rootPath()->join('public' . '/assets/uploads/drinks/' . $id);
 
         if (is_dir($dir)) {
-
             $files = glob($dir . '/*');
 
-            foreach ($files as $file){
-                if(is_file($file)){
+            foreach ($files as $file) {
+                if (is_file($file)) {
                     unlink($file);
-                }  
+                }
             }
 
-            if(count(glob($dir . '/*')) === 0){
+            if (count(glob($dir . '/*')) === 0) {
                 rmdir($dir);
                 return true;
             }

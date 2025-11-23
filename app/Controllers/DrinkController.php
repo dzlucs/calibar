@@ -52,8 +52,7 @@ class DrinkController extends Controller
 
         $image = $_FILES['drink_image'];
 
-        if ($drink->save()){
-
+        if ($drink->save()) {
             FlashMessage::success('Drink registrado com sucesso!');
 
             $drinkImage = new DrinkImage([
@@ -61,20 +60,18 @@ class DrinkController extends Controller
                 'image_name' => null
             ]);
 
-            if($drinkImage->gallery()->create($image)){
+            if ($drinkImage->gallery()->create($image)) {
                 FlashMessage::success('Imagem registrada com sucesso!');
             } else {
                 FlashMessage::danger('Problemas ao registrar a imagem!');
             }
 
             $this->redirectTo(route('drinks.index'));
-
         } else {
             FlashMessage::danger('Existem dados incorretos! Por favor verifique');
 
             $this->render('admin/drinks/new', compact('drink', 'imagePath'));
         }
-
     }
 
     public function edit(Request $request): void
@@ -118,8 +115,9 @@ class DrinkController extends Controller
 
         /** @var Drink $drink */
         $drink = $this->current_user->admin()->drinks()->findById($params['drink_id']);
+        $id = $params['drink_id'];
 
-        if(DrinkGallery::destroyAllDrinkImages($drink->id)){
+        if (DrinkGallery::destroyAllDrinkImages($id)) {
             $drink->destroy();
             FlashMessage::success('Drink removido com sucesso!');
             $this->redirectTo(route('drinks.index'));
